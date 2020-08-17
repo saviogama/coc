@@ -72,6 +72,37 @@ form textarea {
     filter: brightness(90%);
 }
 
+.searchform {
+    width: 30%;
+    height: 60px;
+    color: #333;
+    border: 1px solid #dcdce6;
+    border-radius: 8px;
+    padding: 0 24px;
+    margin-right: 10px;
+}
+
+.smallbutton {
+    width: 20%;
+    height: 50px;
+    background: var(--color-primary);
+    border: 0;
+    border-radius: 8px;
+    color: #FFF;
+    font-weight: 700;
+    margin-top: 16px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    line-height: 30px;
+    transition: filter 0.2s;
+}
+
+.smallbutton:hover {
+    filter: brightness(90%);
+}
+
 .back-link {
     display: flex;
     align-items: center;

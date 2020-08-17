@@ -7,15 +7,17 @@ import heroImg from '../../assets/landing.svg';
 
 export default function Landing() {
     const [id, setId] = useState('');
+    const history = useHistory();
 
     async function handleLogin(e) {
         e.preventDefault();
+        history.push('/home');
     }
 
     return (
         <div className="logon-container">
             <section className="form">
-                <img className="logo" src={logoImg} alt="Be The Hero" />
+                <img className="logo" src={logoImg} alt="COC" />
                 <form onSubmit={handleLogin}>
                     <h1>Faça seu login</h1>
                     <input
@@ -24,10 +26,6 @@ export default function Landing() {
                         onChange={e => setId(e.target.value)}
                     />
                     <button className="button" type="submit">Entrar</button>
-                    <Link className="back-link" to="/register">
-                        <FiLogIn size={16} color="#52658c" />
-                        Cadastrar novo usuário
-                    </Link>
                 </form>
             </section>
             <img className="img" src={heroImg} alt="Hero" />
