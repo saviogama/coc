@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import db from '../database/connection';
 
-export default class TonometriaController {
+export default class ConsultaController {
     async index(request: Request, response: Response) {
         const patient = request.body;
         const id = request.headers.authorization;
@@ -19,23 +19,19 @@ export default class TonometriaController {
 
         if (!patient.cpf) {
             return response.status(400).json({
-                error: 'Missing filters to search tonometria'
+                error: 'Missing filters to search consulta'
             });
         }
-        const tonometria = await db('tonometria')
-            .where('tonometria.pacient_id', '=', patient.cpf as string);
-        return response.json(tonometria);
+        const consulta = await db('consulta')
+            .where('consulta.patient_id', '=', patient.cpf as string);
+
+        return response.json(consulta);
     }
 
     async create(request: Request, response: Response) {
         const {
-            olho_direito,
-            olho_esquerdo,
-            kd,
-            ke,
-            ctd,
-            cte,
-            pacient_id
+            tipo,
+            patient_id
         } = request.body;
 
         const id = request.headers.authorization;
@@ -51,14 +47,9 @@ export default class TonometriaController {
             })
         } else {
             try {
-                await db('tonometria').insert({
-                    olho_direito,
-                    olho_esquerdo,
-                    kd,
-                    ke,
-                    ctd,
-                    cte,
-                    pacient_id
+                await db('consulta').insert({
+                    tipo,
+                    patient_id
                 });
             } catch (error) {
                 return response.status(400).json({

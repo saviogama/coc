@@ -14,7 +14,7 @@ Headers: `{"acess": "privileges"}`
 
 ```
 {
-  "id": "123321456899",
+  "id": 123321456899,
   "password": "secret",
   "type": 1
 }
@@ -26,7 +26,7 @@ Recurso: `/login`
 
 ```
 {
-  "id": "123321456899",
+  "id": 123321456899,
   "password": "secret"
 }
 ```
@@ -37,24 +37,24 @@ _**POST** - Cadastro de pacientes:_
 
 Recurso: `/patients`
 
-Headers: `{"id": "123321456899"}`
+Headers: `{"id": 123321456899}`
 
 ```
 {
-  "cpf": "32132132119",
+  "cpf": 32132132119,
   "nome": "Joaozin",
   "rg": "9222545",
   "data_nascimento": "09-01-1996",
+  "idade": 30,
   "reg": "Nao sei",
-  "endereco_rua": "Rua dos beco",
-  "endereco_numero": 99,
-  "endereco_bairro": "Nao tem",
+  "rua": "Rua dos beco",
+  "numero": 99,
+  "bairro": "Nao tem",
   "nome_pai": "Zezin",
   "nome_mae": "Zefinha",
   "telefone": "81999999999",
   "email": "teste@teste.com,
   "profissao": "Predrero",
-  "data_atendimento": "09-01-2019",
   "convenio": "SUS",
   "antecedentes_pessoais": "Ele bebia cana"
 }
@@ -66,8 +66,8 @@ _**GET** - Procura de pacientes:_
 
 Recurso: `/patients`
 
-Query: `{"cpf": "32132132119"}`
-Headers: `{"id": "123321456899"}`
+Query: `{"cpf": 32132132119}`
+Headers: `{"id": 123321456899}`
 
 ```
 {
@@ -81,24 +81,24 @@ _**PUT** - Atualização de pacientes:_
 
 Recurso: `/patients`
 
-Headers: `{"id": "123321456899"}`
+Headers: `{"id": 123321456899}`
 
 ```
 {
-  "cpf": "32132132119",
+  "cpf": 32132132119,
   "nome": "Joaozin",
   "rg": "9222545",
   "data_nascimento": "09-01-1996",
+  "idade": 30,
   "reg": "Nao sei",
-  "endereco_rua": "Rua dos beco",
-  "endereco_numero": 99,
-  "endereco_bairro": "Nao tem",
+  "rua": "Rua dos beco",
+  "numero": 99,
+  "bairro": "Nao tem",
   "nome_pai": "Zezin",
   "nome_mae": "Zefinha",
   "telefone": "81999999999",
   "email": "teste@teste.com,
   "profissao": "Predrero",
-  "data_atendimento": "09-01-2019",
   "convenio": "SUS",
   "antecedentes_pessoais": "Ele nao bebia cana"
 }
@@ -110,10 +110,87 @@ _**DELETE** - Exclusão de pacientes:_
 
 Recurso: `/patients`
 
-Headers: `{"id": "123321456899"}`
+Headers: `{"id": 123321456899}`
 
 ```
 {
-  "cpf": "32132132119"
+  "cpf": 32132132119
+}
+```
+
+_**POST** - Nova consulta:_
+
+**É necessário enviar no headers da aplicação, o id do usuário logado como forma de segurança.**
+
+Recurso: `/consulta`
+
+Headers: `{"id": 123321456899}`
+
+```
+{
+  "tipo": "teste_de_olhinho",
+  "patient_id": 32132132119
+}
+```
+
+_**GET** - Procura de consulta:_
+
+**É necessário informar sempre o CPF do usuário a ser pesquisado na query, assim como o id do usuário logado, nesse caso no headers.**
+
+Recurso: `/consulta`
+
+Headers: `{"id": 123321456899}`
+
+```
+{
+  "id": 32132132119
+}
+```
+
+_**POST** - Nova avaliacao:_
+
+**É necessário enviar no headers da aplicação, o id do usuário logado como forma de segurança.**
+
+Recurso: `/avaliacao`
+
+Headers: `{"id": 123321456899}`
+
+```
+{
+  "avl_olho_direito": "teste",
+  "avl_olho_esquerdo": "teste",
+  "hda": "teste",
+  "tonometria_olho_direito": "teste",
+  "tonometria_olho_esquerdo": "teste",
+  "inspecao": "teste",
+  "inspecao_ppc": "teste",
+  "refracao_olho_direito": "teste",
+  "refracao_olho_esquerdo": "teste",
+  "refracao_olho_direito_esferico": "teste",
+  "refracao_olho_esquerdo_esferico": "teste",
+  "refracao_olho_direito_cilindro": "teste",
+  "refracao_olho_esquerdo_cilindro": "teste",
+  "refracao_olho_direito_eixo": "teste",
+  "refracao_olho_esquerdo_eixo": "teste",
+  "refracao_olho_direito_adicao": "teste",
+  "refracao_olho_esquerdo_adicao": "teste",
+  "dp": "teste",
+  "biomicroscopia": "teste",
+  "fungoscopia": "teste",
+  "consulta_id": 1
+}
+```
+
+_**GET** - Procura de avaliacao:_
+
+**É necessário informar sempre o CPF do usuário a ser pesquisado na query, assim como o id do usuário logado, nesse caso no headers.**
+
+Recurso: `/avaliacao`
+
+Headers: `{"id": 123321456899}`
+
+```
+{
+  "id": 1
 }
 ```

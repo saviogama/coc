@@ -25,6 +25,7 @@ export default class PatientsController {
 
         const patients = await db('patients')
             .where('patients.cpf', '=', filters.cpf as string);
+
         return response.json(patients);
     }
 
@@ -34,16 +35,16 @@ export default class PatientsController {
             nome,
             rg,
             data_nascimento,
+            idade,
             reg,
-            endereco_rua,
-            endereco_numero,
-            endereco_bairro,
+            rua,
+            numero,
+            bairro,
             nome_pai,
             nome_mae,
             telefone,
             email,
             profissao,
-            data_atendimento,
             convenio,
             antecedentes_pessoais
         } = request.body;
@@ -66,16 +67,16 @@ export default class PatientsController {
                     nome,
                     rg,
                     data_nascimento,
+                    idade,
                     reg,
-                    endereco_rua,
-                    endereco_numero,
-                    endereco_bairro,
+                    rua,
+                    numero,
+                    bairro,
                     nome_pai,
                     nome_mae,
                     telefone,
                     email,
                     profissao,
-                    data_atendimento,
                     convenio,
                     antecedentes_pessoais
                 });
@@ -94,16 +95,16 @@ export default class PatientsController {
             nome,
             rg,
             data_nascimento,
+            idade,
             reg,
-            endereco_rua,
-            endereco_numero,
-            endereco_bairro,
+            rua,
+            numero,
+            bairro,
             nome_pai,
             nome_mae,
             telefone,
             email,
             profissao,
-            data_atendimento,
             convenio,
             antecedentes_pessoais
         } = request.body;
@@ -127,16 +128,16 @@ export default class PatientsController {
                         nome: nome,
                         rg: rg,
                         data_nascimento: data_nascimento,
+                        idade: idade,
                         reg: reg,
-                        endereco_rua: endereco_rua,
-                        endereco_numero: endereco_numero,
-                        endereco_bairro: endereco_bairro,
+                        rua: rua,
+                        numero: numero,
+                        bairro: bairro,
                         nome_pai: nome_pai,
                         nome_mae: nome_mae,
                         telefone: telefone,
                         email: email,
                         profissao: profissao,
-                        data_atendimento: data_atendimento,
                         convenio: convenio,
                         antecedentes_pessoais: antecedentes_pessoais
                     });
