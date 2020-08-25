@@ -4,6 +4,7 @@ import db from '../database/connection';
 export default class UsersController {
     async index(request: Request, response: Response) {
         const users = await db('users');
+        
         return response.json(users);
     }
 
@@ -53,6 +54,6 @@ export default class UsersController {
             })
         }
 
-        return response.status(204).send();
+        return response.json(id);
     }
 }

@@ -12,7 +12,7 @@ export async function up(knex: Knex) {
                 'gonioscopia',
                 'pressao_intraocular']);
         table.timestamp('created_at')
-            .defaultTo('now()')
+            .defaultTo(knex.fn.now())
             .notNullable();
 
         table.integer('patient_id')
