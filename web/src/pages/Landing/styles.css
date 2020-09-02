@@ -11,7 +11,7 @@
 
 .logon-container section.form {
     width: 100%;
-    max-width: 350px;
+    max-width: 400px;
     margin-right: 30px;
 }
 
@@ -24,11 +24,15 @@
     margin-bottom: 32px;
 }
 
+.logon-container section.form form input {
+    margin-bottom: 5px;
+}
+
 .logo {
     min-width: 25rem;
 }
 
 .img {
     width: 100%;
-    max-width: 600px;
+    max-width: 550px;
 }
