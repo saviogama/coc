@@ -17,8 +17,9 @@ export default function Home() {
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="COC" />
-                <span>Bem vindo de volta!</span>
-                <Link className="button" to="/new">Cadastrar paciente</Link>
+                <span>Bem-vindo de volta!</span>
+                <Link className="button" id="link1" to="/register">Novo Paciente</Link>
+                <Link className="button" id="link2" to="/consultas">Consultas</Link>
                 <button className="logout" onClick={handleLogout} type="button">
                     Sair
                     <FiLogOut size={18} color="#52658c" />
@@ -32,7 +33,7 @@ export default function Home() {
                 />
                 <button className="smallbutton" type="submit">Buscar</button>
             </form>
-            <h1>Pessoas cadastradas</h1>
+            <h2>Pessoas cadastradas</h2>
             <ul>
                 <li>
                     <strong>Nome:</strong>

@@ -10,11 +10,6 @@
     align-items: center;
 }
 
-.profile-container header span {
-    font-size: 20px;
-    margin-left: 24px;
-}
-
 .profile-container header img {
     height: 64px;
 }
@@ -25,43 +20,13 @@
     margin-top: 0;
 }
 
-#link2 {
-    width: 200px;
+#link3 {
     margin-left: 16px;
     margin-top: 0;
 }
 
-.profile-container header button {
-    height: 60px;
-    width: 80px;
-    border-radius: 4px;
-    border: 1px solid #dcdce6;
-    background: transparent;
-    margin-left: 16px;
-    transition: border-color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.logout svg {
-    margin-left: 8px;
-}
-
-.profile-container header button:hover {
-    border-color: #999;
-}
-
-.profile-container form {
-    margin-top: 50px;
-    margin-bottom: 14px;
-}
-
 .profile-container h2 {
-    margin-top: 30px;
+    margin-top: 50px;
     margin-bottom: 14px;
 }
 
@@ -102,14 +67,6 @@
 .bt {
     position: absolute;
     right: 14px;
-    top: 24px;
-    border: 0;
-    background: #FFF;
-}
-
-.bt2 {
-    position: absolute;
-    right: 50px;
     top: 24px;
     border: 0;
     background: #FFF;

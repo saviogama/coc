@@ -112,6 +112,7 @@ form textarea {
     text-decoration: none;
     font-weight: 500;
     transition: opacity 0.2s;
+    width: fit-content;
 }
 
 .back-link svg {

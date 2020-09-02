@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { FiLogIn } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 import './styles.css';
-import logoImg from '../../assets/olho_log.svg';
-import heroImg from '../../assets/landing.svg';
+import logoImg from '../../assets/logo.svg';
 
 export default function Landing() {
     const [id, setId] = useState('');
@@ -17,7 +15,7 @@ export default function Landing() {
     return (
         <div className="logon-container">
             <section className="form">
-                <img className="logo" src={logoImg} alt="COC" />
+                
                 <form onSubmit={handleLogin}>
                     <h1>Faça seu login</h1>
                     <input
@@ -25,10 +23,15 @@ export default function Landing() {
                         value={id}
                         onChange={e => setId(e.target.value)}
                     />
+                    <input
+                        placeholder="Sua senha"
+                        value={id}
+                        onChange={e => setId(e.target.value)}
+                    />
                     <button className="button" type="submit">Entrar</button>
                 </form>
             </section>
-            <img className="img" src={heroImg} alt="Hero" />
+            <img className="img" src={logoImg} alt="Hero" />
         </div>
     );
 }
