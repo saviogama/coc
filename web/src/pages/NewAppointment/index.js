@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+import { formatter } from '../../components/Formatter';
 import './styles.css';
-import logoImg from '../../assets/olho_log.svg';
 
-export default function NewPacient() {
+export default function NewAppointment() {
     const [cpf, setCpf] = useState('');
     const [tipo, setTipo] = useState('');
 
@@ -29,13 +29,14 @@ export default function NewPacient() {
                     <input
                         placeholder="CPF"
                         value={cpf}
-                        onChange={e => setCpf(e.target.value)}
+                        onChange={e => setCpf(formatter(e.target.value))}
                     />
-                    <input
-                        placeholder="Tipo da consulta"
-                        value={tipo}
-                        onChange={e => setTipo(e.target.value)}
-                    />
+                    <select value={tipo} onChange={e => setTipo(e.target.value)}>
+                        <option defaultValue value="laranja">Laranja</option>
+                        <option value="limao">Limão</option>
+                        <option value="coco">Coco</option>
+                        <option value="manga">Manga</option>
+                    </select>
                     <button className="button" type="submit">Confirmar</button>
                 </form>
             </div>

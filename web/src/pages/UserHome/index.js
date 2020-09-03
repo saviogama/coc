@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiLogOut, FiTrash2, FiEdit3 } from 'react-icons/fi';
+import { formatter } from '../../components/Formatter';
 import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
 
-export default function Home() {
+export default function UserHome() {
+    const [cpf, setCpf] = useState('');
     const [incidents, setIncidents] = useState([]);
     const history = useHistory();
 
@@ -19,7 +21,7 @@ export default function Home() {
                 <img src={logoImg} alt="COC" />
                 <span>Bem-vindo de volta!</span>
                 <Link className="button" id="link1" to="/register">Novo Paciente</Link>
-                <Link className="button" id="link2" to="/consultas">Consultas</Link>
+                <Link className="button" id="link2" to="/appointments">Consultas</Link>
                 <button className="logout" onClick={handleLogout} type="button">
                     Sair
                     <FiLogOut size={18} color="#52658c" />
@@ -30,6 +32,9 @@ export default function Home() {
                 <input
                     className="searchform"
                     placeholder="Digite o CPF desejado"
+                    value={cpf}
+                    onChange={e => setCpf(formatter(e.target.value))}
+                    required
                 />
                 <button className="smallbutton" type="submit">Buscar</button>
             </form>

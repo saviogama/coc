@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import './styles.css';
-import logoImg from '../../assets/olho_log.svg';
 
-export default function NewPacient() {
+export default function NewPatient() {
     const [nome, setNome] = useState('');
     const [dn, setDn] = useState('');
     const [reg, setReg] = useState('');
@@ -16,7 +15,6 @@ export default function NewPacient() {
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
     const [profissao, setProfissao] = useState('');
-    const [dataAtendimento, setDataAtendimento] = useState('');
     const [convenio, setConvenio] = useState('');
     const [antecedentes, setAntecedentes] = useState('');
 
@@ -24,6 +22,7 @@ export default function NewPacient() {
 
     async function handleNewPacient(e) {
         e.preventDefault();
+        console.log(nome);
     }
 
     return (
@@ -42,9 +41,11 @@ export default function NewPacient() {
                         placeholder="Nome"
                         value={nome}
                         onChange={e => setNome(e.target.value)}
+                        required
                     />
                     <input
-                        placeholder="Data de Nascimento"
+                        type="date"
+                        placeholder="Data de nascimento"
                         value={dn}
                         onChange={e => setDn(e.target.value)}
                     />
@@ -77,6 +78,7 @@ export default function NewPacient() {
                         placeholder="CPF"
                         value={cpf}
                         onChange={e => setCpf(e.target.value)}
+                        required
                     />
                     <input
                         placeholder="Telefone"
@@ -92,11 +94,6 @@ export default function NewPacient() {
                         placeholder="Profissão"
                         value={profissao}
                         onChange={e => setProfissao(e.target.value)}
-                    />
-                    <input
-                        placeholder="Data do atendimento"
-                        value={dataAtendimento}
-                        onChange={e => setDataAtendimento(e.target.value)}
                     />
                     <input
                         placeholder="Convênio"
