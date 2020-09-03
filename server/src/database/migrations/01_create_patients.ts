@@ -2,10 +2,10 @@ import Knex from 'knex';
 
 export async function up(knex: Knex) {
     return knex.schema.createTable('patients', table => {
-        table.integer('cpf', 11).primary().notNullable();
+        table.string('cpf').primary().notNullable();
         table.string('nome').notNullable();
         table.string('rg');
-        table.date('data_nascimento');
+        table.string('data_nascimento');
         table.integer('idade');
         table.string('reg');
         table.string('rua');

@@ -10,8 +10,6 @@ export async function up(knex: Knex) {
         table.string('tonometria_olho_esquerdo');
         table.text('inspecao');
         table.string('inspecao_ppc');
-        table.string('refracao_olho_direito');
-        table.string('refracao_olho_esquerdo');
         table.string('refracao_olho_direito_esferico');
         table.string('refracao_olho_esquerdo_esferico');
         table.string('refracao_olho_direito_cilindro');
