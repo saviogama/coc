@@ -3,9 +3,16 @@ import db from '../database/connection';
 
 export default class UsersController {
     async index(request: Request, response: Response) {
+        const acess = request.headers.authorization;
         const users = await db('users');
-        
-        return response.json(users);
+
+        if (acess === 'privileges') {
+            return response.json(users);
+        }
+
+        return response.status(400).json({
+            error: 'Invalid master key'
+        });
     }
 
     async create(request: Request, response: Response) {
@@ -54,6 +61,6 @@ export default class UsersController {
             })
         }
 
-        return response.json(id);
+        return response.json(user);
     }
 }
