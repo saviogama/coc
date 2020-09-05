@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import StoreContext from '../contexts/context';
 
-export const UserRoute = ({ component: Component, ...rest }) => {
+export const MedRoute = ({ component: Component, ...rest }) => {
     const { token } = useContext(StoreContext);
 
     return (

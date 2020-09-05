@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import Context from '../../contexts/context';
 import { FiLogOut, FiLogIn } from 'react-icons/fi';
 import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
 
 export default function DocAppointments() {
     const [incidents, setIncidents] = useState([]);
+    const { signOut } = useContext(Context);
     const history = useHistory();
 
     function handleLogout() {
-        localStorage.clear();
-        history.push('/');
+        signOut();
     }
 
     function handleEvaluation() {
@@ -22,7 +23,7 @@ export default function DocAppointments() {
             <header>
                 <img src={logoImg} alt="COC" />
                 <span>Bem-vindo de volta!</span>
-                <button className="logout" onClick={handleLogout} type="button">
+                <button className="logout" id="logoutmed" onClick={handleLogout} type="button">
                     Sair
                     <FiLogOut size={18} color="#52658c" />
                 </button>

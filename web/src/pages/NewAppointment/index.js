@@ -20,7 +20,7 @@ export default function NewAppointment() {
                 <section>
                     <h1>Nova consulta</h1>
                     <p>Informe o CPF de um paciente cadastrado e o tipo da consulta.</p>
-                    <Link className="back-link" to="/consultas">
+                    <Link className="back-link" to="/appointments">
                         <FiArrowLeft size={16} color="#52658c" />
                         Voltar
                     </Link>
@@ -32,10 +32,13 @@ export default function NewAppointment() {
                         onChange={e => setCpf(formatter(e.target.value))}
                     />
                     <select value={tipo} onChange={e => setTipo(e.target.value)}>
-                        <option defaultValue value="laranja">Laranja</option>
-                        <option value="limao">Limão</option>
-                        <option value="coco">Coco</option>
-                        <option value="manga">Manga</option>
+                        <option defaultValue value="curva_tensional">Curva Tensional</option>
+                        <option value="fundo_de_olho">Fundo de olho</option>
+                        <option value="teste_de_olhinho">Teste de olhinho</option>
+                        <option value="mapeamento_de_retina">Mapeamento de retina</option>
+                        <option value="paquimetria">Paquimetria</option>
+                        <option value="gonioscopia">Gonioscopia</option>
+                        <option value="pressao_intraocular">Pressão intraocular</option>
                     </select>
                     <button className="button" type="submit">Confirmar</button>
                 </form>

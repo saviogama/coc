@@ -17,8 +17,8 @@ export default function UserAppointments() {
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="COC" />
-                <Link className="button" id="link1" to="/appointments/new">Nova Consulta</Link>
-                <Link className="back-link" id="link3" to="/home">
+                <Link className="button" id="link1" to="/appointments-new">Nova Consulta</Link>
+                <Link className="back-link" id="link3" to="/user">
                     <FiArrowLeft size={16} color="#52658c" />
                     Voltar
                 </Link>
