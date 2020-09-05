@@ -52,8 +52,13 @@ export default class UsersController {
 
         const user = await db('users')
             .where('id', id)
-            .select('password')
             .first();
+
+        if (!user) {
+            return response.status(401).json({
+                error: 'Id not found'
+            })
+        }
 
         if (user.password != password) {
             return response.status(401).json({

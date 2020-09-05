@@ -1,28 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import StoreContext from '../../contexts/context';
+import api from '../../services/api';
+import { formatter } from '../../components/Formatter';
 import { FiArrowLeft } from 'react-icons/fi';
 import './styles.css';
 
 export default function NewPatient() {
+    const [cpf, setCpf] = useState('');
     const [nome, setNome] = useState('');
+    const [rg, setRg] = useState('');
     const [dn, setDn] = useState('');
+    const [idade, setIdade] = useState('');
     const [reg, setReg] = useState('');
-    const [endereco, setEndereco] = useState('');
+    const [rua, setRua] = useState('');
+    const [numero, setNumero] = useState('');
+    const [bairro, setBairro] = useState('');
     const [nomePai, setNomePai] = useState('');
     const [nomeMae, setNomeMae] = useState('');
-    const [rg, setRg] = useState('');
-    const [cpf, setCpf] = useState('');
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
     const [profissao, setProfissao] = useState('');
     const [convenio, setConvenio] = useState('');
     const [antecedentes, setAntecedentes] = useState('');
 
+    const { token } = useContext(StoreContext);
     const history = useHistory();
 
     async function handleNewPacient(e) {
         e.preventDefault();
-        console.log(nome);
+
+        const data = {
+            cpf,
+            nome,
+            rg,
+            dn,
+            idade,
+            reg,
+            rua,
+            numero,
+            bairro,
+            nomePai,
+            nomeMae,
+            telefone,
+            email,
+            profissao,
+            convenio,
+            antecedentes
+        };
+
+        try {
+            const response = await api.post('/patients', data, {
+                headers: {
+                    'Authorization': token
+                }
+            });
+            alert('Cadastro com sucesso!');
+            history.push('/user');
+        } catch (err) {
+            alert('Erro no cadastro!');
+        }
     }
 
     return (
@@ -31,7 +68,7 @@ export default function NewPatient() {
                 <section>
                     <h1>Novo paciente</h1>
                     <p>Preencha as informações para cadastrar um novo paciente no sistema.</p>
-                    <Link className="back-link" to="/home">
+                    <Link className="back-link" to="/user">
                         <FiArrowLeft size={16} color="#52658c" />
                         Voltar
                     </Link>
@@ -44,10 +81,26 @@ export default function NewPatient() {
                         required
                     />
                     <input
+                        placeholder="CPF"
+                        value={cpf}
+                        onChange={e => setCpf(formatter(e.target.value))}
+                        required
+                    />
+                    <input
+                        placeholder="RG"
+                        value={rg}
+                        onChange={e => setRg(e.target.value)}
+                    />
+                    <input
                         type="date"
                         placeholder="Data de nascimento"
                         value={dn}
                         onChange={e => setDn(e.target.value)}
+                    />
+                    <input
+                        placeholder="Idade"
+                        value={idade}
+                        onChange={e => setIdade(e.target.value)}
                     />
                     <input
                         placeholder="Reg."
@@ -56,9 +109,21 @@ export default function NewPatient() {
                     />
                     <input
                         placeholder="Endereço"
-                        value={endereco}
-                        onChange={e => setEndereco(e.target.value)}
+                        value={rua}
+                        onChange={e => setRua(e.target.value)}
                     />
+                    <div>
+                        <input
+                            placeholder="Bairro"
+                            value={bairro}
+                            onChange={e => setBairro(e.target.value)}
+                        />
+                        <input
+                            placeholder="Número"
+                            value={numero}
+                            onChange={e => setNumero(e.target.value)}
+                        />
+                    </div>
                     <input
                         placeholder="Nome do pai"
                         value={nomePai}
@@ -68,17 +133,6 @@ export default function NewPatient() {
                         placeholder="Nome da mãe"
                         value={nomeMae}
                         onChange={e => setNomeMae(e.target.value)}
-                    />
-                    <input
-                        placeholder="RG"
-                        value={rg}
-                        onChange={e => setRg(e.target.value)}
-                    />
-                    <input
-                        placeholder="CPF"
-                        value={cpf}
-                        onChange={e => setCpf(e.target.value)}
-                        required
                     />
                     <input
                         placeholder="Telefone"

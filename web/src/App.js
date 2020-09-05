@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from './contexts/auth';
+import StoreProvider from './contexts/provider';
 import Routes from './routes'
 import './global.css'
 
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
+      <StoreProvider>
         <Routes />
-      </AuthProvider>
+      </StoreProvider>
     </BrowserRouter>
   );
 }
