@@ -11,7 +11,7 @@ export default class AvaliacaoController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
@@ -58,7 +58,7 @@ export default class AvaliacaoController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
@@ -168,7 +168,7 @@ export default class AvaliacaoController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })

@@ -11,7 +11,7 @@ export default class ConsultaController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
@@ -41,7 +41,7 @@ export default class ConsultaController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
@@ -80,7 +80,7 @@ export default class ConsultaController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
@@ -112,7 +112,7 @@ export default class ConsultaController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })

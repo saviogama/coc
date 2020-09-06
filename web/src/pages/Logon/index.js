@@ -9,7 +9,7 @@ export default function Logon() {
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
 
-    const { setToken } = useContext(StoreContext);
+    const { setToken, setType } = useContext(StoreContext);
     const history = useHistory();
 
     async function handleLogin(e) {
@@ -23,11 +23,11 @@ export default function Logon() {
         try {
             const response = await api.post('login', data);
             if (response.data) {
+                setToken(response.data.id);
+                setType(response.data.type);
                 if (response.data.type === 1) {
-                    setToken(response.data.id);
                     history.push("/home");
                 } else {
-                    setToken(response.data.id);
                     history.push("/user");
                 }
             }

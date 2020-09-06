@@ -7,22 +7,22 @@ import { FiArrowLeft } from 'react-icons/fi';
 import './styles.css';
 
 export default function NewPatient() {
-    const [cpf, setCpf] = useState('');
-    const [nome, setNome] = useState('');
-    const [rg, setRg] = useState('');
-    const [dn, setDn] = useState('');
-    const [idade, setIdade] = useState('');
-    const [reg, setReg] = useState('');
-    const [rua, setRua] = useState('');
-    const [numero, setNumero] = useState('');
-    const [bairro, setBairro] = useState('');
-    const [nomePai, setNomePai] = useState('');
-    const [nomeMae, setNomeMae] = useState('');
-    const [telefone, setTelefone] = useState('');
-    const [email, setEmail] = useState('');
-    const [profissao, setProfissao] = useState('');
-    const [convenio, setConvenio] = useState('');
-    const [antecedentes, setAntecedentes] = useState('');
+    const [cpf, setCpf] = useState(null);
+    const [nome, setNome] = useState(null);
+    const [rg, setRg] = useState(null);
+    const [data_nascimento, setData_nascimento] = useState(null);
+    const [idade, setIdade] = useState(null);
+    const [reg, setReg] = useState(null);
+    const [rua, setRua] = useState(null);
+    const [numero, setNumero] = useState(null);
+    const [bairro, setBairro] = useState(null);
+    const [nome_pai, setNome_pai] = useState(null);
+    const [nome_mae, setNome_mae] = useState(null);
+    const [telefone, setTelefone] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [profissao, setProfissao] = useState(null);
+    const [convenio, setConvenio] = useState(null);
+    const [antecedentes_pessoais, setAntecedentes_pessoais] = useState(null);
 
     const { token } = useContext(StoreContext);
     const history = useHistory();
@@ -34,19 +34,19 @@ export default function NewPatient() {
             cpf,
             nome,
             rg,
-            dn,
+            data_nascimento,
             idade,
             reg,
             rua,
             numero,
             bairro,
-            nomePai,
-            nomeMae,
+            nome_pai,
+            nome_mae,
             telefone,
             email,
             profissao,
             convenio,
-            antecedentes
+            antecedentes_pessoais
         };
 
         try {
@@ -94,8 +94,8 @@ export default function NewPatient() {
                     <input
                         type="date"
                         placeholder="Data de nascimento"
-                        value={dn}
-                        onChange={e => setDn(e.target.value)}
+                        value={data_nascimento}
+                        onChange={e => setData_nascimento(e.target.value)}
                     />
                     <input
                         placeholder="Idade"
@@ -126,13 +126,13 @@ export default function NewPatient() {
                     </div>
                     <input
                         placeholder="Nome do pai"
-                        value={nomePai}
-                        onChange={e => setNomePai(e.target.value)}
+                        value={nome_pai}
+                        onChange={e => setNome_pai(e.target.value)}
                     />
                     <input
                         placeholder="Nome da mãe"
-                        value={nomeMae}
-                        onChange={e => setNomeMae(e.target.value)}
+                        value={nome_mae}
+                        onChange={e => setNome_mae(e.target.value)}
                     />
                     <input
                         placeholder="Telefone"
@@ -156,8 +156,8 @@ export default function NewPatient() {
                     />
                     <textarea
                         placeholder="Antecedentes pessoais"
-                        value={antecedentes}
-                        onChange={e => setAntecedentes(e.target.value)}
+                        value={antecedentes_pessoais}
+                        onChange={e => setAntecedentes_pessoais(e.target.value)}
                     />
                     <button className="button" type="submit">Cadastrar</button>
                 </form>

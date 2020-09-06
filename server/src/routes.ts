@@ -16,6 +16,7 @@ routes.get('/privileges', usersController.index); //ok
 routes.post('/privileges', usersController.create); //ok
 routes.post('/login', usersController.login); //ok
 
+routes.get('/patients-all', patientsController.all); //ok
 routes.get('/patients', patientsController.index); //ok
 routes.post('/patients', patientsController.create); //ok
 routes.put('/patients', patientsController.update); //ok

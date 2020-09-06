@@ -3,12 +3,12 @@ import { Route, Redirect } from 'react-router-dom';
 import StoreContext from '../contexts/context';
 
 export const UserRoute = ({ component: Component, ...rest }) => {
-    const { token } = useContext(StoreContext);
+    const { token, type } = useContext(StoreContext);
 
     return (
         <Route
             {...rest}
-            render={() => token
+            render={() => (token && (type === 2))
                 ? <Component {...rest} />
                 : <Redirect to="/" />
             }

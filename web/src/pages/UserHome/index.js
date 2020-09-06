@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
 import { FiLogOut, FiTrash2, FiEdit3 } from 'react-icons/fi';
@@ -8,15 +8,12 @@ import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
 
 export default function UserHome() {
-    const [cpf, setCpf] = useState('');
+    const [cpf, setCpf] = useState(null);
     const [patients, setPatients] = useState([]);
-
-    const { token } = useContext(StoreContext);
-    const history = useHistory();
+    const { token, signOut } = useContext(StoreContext);
 
     function handleLogout() {
-        localStorage.clear();
-        history.push("/");
+        signOut();
     }
 
     async function searchPatient(e) {
@@ -27,6 +24,22 @@ export default function UserHome() {
                 params: {
                     cpf
                 },
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                setPatients(response.data);
+            })
+        } catch (error) {
+            alert('Erro ao buscar paciente!');
+        }
+    }
+
+    async function searchAll(e) {
+        e.preventDefault();
+
+        try {
+            await api.get('patients-all', {
                 headers: {
                     Authorization: token,
                 }
@@ -60,6 +73,7 @@ export default function UserHome() {
                     required
                 />
                 <button className="smallbutton" type="submit">Buscar</button>
+                <button className="smallbutton" id="allsearch" type="button" onClick={searchAll}>Listar todos</button>
             </form>
             <h2>Pessoas cadastradas</h2>
             <ul>
