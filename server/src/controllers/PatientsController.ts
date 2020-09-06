@@ -2,6 +2,25 @@ import { Request, Response } from 'express';
 import db from '../database/connection';
 
 export default class PatientsController {
+    async all(request: Request, response: Response) {
+        const id = request.headers.authorization;
+
+        const user = await db('users')
+            .where('id', id)
+            .select('id')
+            .first();
+
+        if (!user) {
+            return response.status(401).json({
+                error: 'Not authorized'
+            })
+        }
+
+        const patients = await db('patients');
+
+        return response.json(patients);
+    }
+
     async index(request: Request, response: Response) {
         const filters = request.query;
         const id = request.headers.authorization;
@@ -11,7 +30,7 @@ export default class PatientsController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
@@ -56,7 +75,7 @@ export default class PatientsController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
@@ -116,7 +135,7 @@ export default class PatientsController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
@@ -162,7 +181,7 @@ export default class PatientsController {
             .select('id')
             .first();
 
-        if (user.id != id) {
+        if (!user) {
             return response.status(401).json({
                 error: 'Not authorized'
             })
