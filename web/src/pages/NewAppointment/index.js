@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import StoreContext from '../../contexts/context';
+import api from '../../services/api';
 import { FiArrowLeft } from 'react-icons/fi';
 import { formatter } from '../../components/Formatter';
 import './styles.css';
@@ -8,10 +10,28 @@ export default function NewAppointment() {
     const [cpf, setCpf] = useState('');
     const [tipo, setTipo] = useState('');
 
+    const { token } = useContext(StoreContext);
     const history = useHistory();
 
-    async function handleNewPacient(e) {
+    async function handleNewAppointment(e) {
         e.preventDefault();
+
+        const data = {
+            tipo,
+            'patient_id': cpf
+        };
+
+        try {
+            const response = await api.post('/consulta', data, {
+                headers: {
+                    'Authorization': token
+                }
+            });
+            alert('Consulta salva!');
+            history.push('/appointments');
+        } catch (err) {
+            alert('Erro no cadastro!');
+        }
     }
 
     return (
@@ -25,14 +45,16 @@ export default function NewAppointment() {
                         Voltar
                     </Link>
                 </section>
-                <form onSubmit={handleNewPacient}>
+                <form onSubmit={handleNewAppointment}>
                     <input
                         placeholder="CPF"
                         value={cpf}
                         onChange={e => setCpf(formatter(e.target.value))}
+                        required
                     />
                     <select value={tipo} onChange={e => setTipo(e.target.value)}>
-                        <option defaultValue value="curva_tensional">Curva Tensional</option>
+                        <option value='' disabled>Selecione o tipo da consulta</option>
+                        <option value="curva_tensional">Curva Tensional</option>
                         <option value="fundo_de_olho">Fundo de olho</option>
                         <option value="teste_de_olhinho">Teste de olhinho</option>
                         <option value="mapeamento_de_retina">Mapeamento de retina</option>

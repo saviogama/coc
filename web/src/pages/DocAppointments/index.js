@@ -1,21 +1,36 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import Context from '../../contexts/context';
+import { useHistory } from 'react-router-dom';
+import StoreContext from '../../contexts/context';
+import api from '../../services/api';
 import { FiLogOut, FiLogIn } from 'react-icons/fi';
 import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
 
 export default function DocAppointments() {
-    const [incidents, setIncidents] = useState([]);
-    const { signOut } = useContext(Context);
+    const [consultas, setConsultas] = useState([]);
+
+    const { token, signOut } = useContext(StoreContext);
     const history = useHistory();
+
+    useEffect(() => {
+        (async () => {
+            await api.get('today', {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                setConsultas(response.data);
+            });
+        })();
+    }, [setConsultas]);
 
     function handleLogout() {
         signOut();
     }
 
-    function handleEvaluation() {
-        history.push('/evaluation')
+    function handleEvaluation(e, consulta) {
+        e.preventDefault();
+        history.push(`/evaluation/${consulta}`);
     }
 
     return (
@@ -30,19 +45,19 @@ export default function DocAppointments() {
             </header>
             <h2>Consultas do dia</h2>
             <ul>
-                <li>
-                    <strong>Nome:</strong>
-                    <p>José Savio Gama Macêdo da Silva Cordeiro</p>
-                    <strong>CPF:</strong>
-                    <p>118.321.494-47</p>
-                    <strong>Tipo de consulta:</strong>
-                    <p>Teste de olhinho</p>
-                    <strong>Antecedentes pessoais:</strong>
-                    <p>Não tem</p>
-                    <button className="bt" type="button" onClick={handleEvaluation}>
-                        <FiLogIn size={20} color="#a8a8b3" />
-                    </button>
-                </li>
+                {consultas.map(consulta => (
+                    <li key={consulta.id}>
+                        <strong>Nome:</strong>
+                        <p>{consulta.nome}</p>
+                        <strong>CPF:</strong>
+                        <p>{consulta.cpf}</p>
+                        <strong>Tipo de consulta:</strong>
+                        <p>{consulta.tipo}</p>
+                        <button className="bt" type="button" onClick={(e) => { handleEvaluation(e, consulta.id) }}>
+                            <FiLogIn size={20} color="#a8a8b3" />
+                        </button>
+                    </li>
+                ))}
             </ul>
         </div>
     );
