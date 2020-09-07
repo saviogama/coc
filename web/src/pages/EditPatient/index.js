@@ -27,10 +27,6 @@ export default function EditPatient() {
     const { cpf } = useParams();
     const history = useHistory();
 
-    const updatePatient = (target) => {
-        setPatient({ ...patient, [target.id]: target });
-    }
-
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -93,10 +89,9 @@ export default function EditPatient() {
                     'Authorization': token
                 }
             });
-            alert('Editado com sucesso!');
             history.push('/user');
         } catch (err) {
-            alert('Erro ao editar paciente!');
+            alert('Erro ao editar cadastro!');
         }
     }
 

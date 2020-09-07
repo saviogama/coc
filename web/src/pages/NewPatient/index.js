@@ -7,22 +7,22 @@ import { FiArrowLeft } from 'react-icons/fi';
 import './styles.css';
 
 export default function NewPatient() {
-    const [cpf, setCpf] = useState(null);
-    const [nome, setNome] = useState(null);
-    const [rg, setRg] = useState(null);
-    const [data_nascimento, setData_nascimento] = useState(null);
-    const [idade, setIdade] = useState(null);
-    const [reg, setReg] = useState(null);
-    const [rua, setRua] = useState(null);
-    const [numero, setNumero] = useState(null);
-    const [bairro, setBairro] = useState(null);
-    const [nome_pai, setNome_pai] = useState(null);
-    const [nome_mae, setNome_mae] = useState(null);
-    const [telefone, setTelefone] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [profissao, setProfissao] = useState(null);
-    const [convenio, setConvenio] = useState(null);
-    const [antecedentes_pessoais, setAntecedentes_pessoais] = useState(null);
+    const [cpf, setCpf] = useState('');
+    const [nome, setNome] = useState('');
+    const [rg, setRg] = useState('');
+    const [data_nascimento, setData_nascimento] = useState('');
+    const [idade, setIdade] = useState('');
+    const [reg, setReg] = useState('');
+    const [rua, setRua] = useState('');
+    const [numero, setNumero] = useState('');
+    const [bairro, setBairro] = useState('');
+    const [nome_pai, setNome_pai] = useState('');
+    const [nome_mae, setNome_mae] = useState('');
+    const [telefone, setTelefone] = useState('');
+    const [email, setEmail] = useState('');
+    const [profissao, setProfissao] = useState('');
+    const [convenio, setConvenio] = useState('');
+    const [antecedentes_pessoais, setAntecedentes_pessoais] = useState('');
 
     const { token } = useContext(StoreContext);
     const history = useHistory();
@@ -50,15 +50,14 @@ export default function NewPatient() {
         };
 
         try {
-            const response = await api.post('/patients', data, {
+            await api.post('/patients', data, {
                 headers: {
                     'Authorization': token
                 }
             });
-            alert('Cadastro com sucesso!');
             history.push('/user');
         } catch (err) {
-            alert('Erro no cadastro!');
+            alert('Erro ao cadastrar paciente.');
         }
     }
 

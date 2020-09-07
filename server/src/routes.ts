@@ -24,15 +24,15 @@ routes.delete('/patients/:cpf', patientsController.delete); //ok
 
 routes.get('/consulta/:consultas', consultaController.index); //ok
 routes.post('/consulta', consultaController.create); //ok
-routes.put('/consulta', consultaController.update); //ok
+//routes.put('/consulta', consultaController.update); //ok
 //routes.delete('/consulta', consultaController.delete); //ok
 
 routes.get('/today/:consultas', todayController.appointment); //ok
 routes.get('/today', todayController.index); //ok
 routes.delete('/today/:today', todayController.delete); //ok
 
-routes.get('/avaliacao', avaliacaoController.index); //ok
+routes.get('/avaliacao/:avaliacoes', avaliacaoController.index); //ok
 routes.post('/avaliacao', avaliacaoController.create); //ok
-routes.put('/avaliacao', avaliacaoController.update); //ok
+//routes.put('/avaliacao', avaliacaoController.update); //ok
 
 export default routes;

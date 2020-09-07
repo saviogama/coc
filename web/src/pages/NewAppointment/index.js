@@ -22,15 +22,14 @@ export default function NewAppointment() {
         };
 
         try {
-            const response = await api.post('/consulta', data, {
+            await api.post('/consulta', data, {
                 headers: {
                     'Authorization': token
                 }
             });
-            alert('Consulta salva!');
             history.push('/appointments');
         } catch (err) {
-            alert('Erro no cadastro!');
+            alert('Erro ao criar consulta!');
         }
     }
 
@@ -62,7 +61,7 @@ export default function NewAppointment() {
                         <option value="gonioscopia">Gonioscopia</option>
                         <option value="pressao_intraocular">Pressão intraocular</option>
                     </select>
-                    <button className="button" type="submit">Confirmar</button>
+                    <button className="button" type="submit">Criar</button>
                 </form>
             </div>
         </div>

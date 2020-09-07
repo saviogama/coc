@@ -32,7 +32,7 @@ export default function Logon() {
                 }
             }
         } catch (err) {
-            alert("Id ou senha inválidos");
+            alert("Id ou senha inválidos.");
         }
     }
 

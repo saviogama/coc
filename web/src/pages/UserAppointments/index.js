@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
 import { FiArrowLeft, FiCheck } from 'react-icons/fi';
@@ -10,7 +10,6 @@ export default function UserAppointments() {
     const [consultas, setConsultas] = useState([]);
 
     const { token } = useContext(StoreContext);
-    const history = useHistory();
 
     useEffect(() => {
         (async () => {
@@ -36,7 +35,8 @@ export default function UserAppointments() {
                 window.location.reload(false);
             });
         } catch (error) {
-            alert('Erro ao deletar paciente!');
+            alert('A consulta não existe ou já foi deletada.');
+            window.location.reload(false);
         }
     }
 

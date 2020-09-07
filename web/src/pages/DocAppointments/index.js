@@ -13,16 +13,31 @@ export default function DocAppointments() {
     const history = useHistory();
 
     useEffect(() => {
-        (async () => {
-            await api.get('today', {
-                headers: {
-                    Authorization: token,
-                }
-            }).then(response => {
-                setConsultas(response.data);
-            });
-        })();
+            (async () => {
+                await api.get('today', {
+                    headers: {
+                        Authorization: token,
+                    }
+                }).then(response => {
+                    setConsultas(response.data);
+                });
+            })();
     }, [setConsultas]);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            (async () => {
+                await api.get('today', {
+                    headers: {
+                        Authorization: token,
+                    }
+                }).then(response => {
+                    setConsultas(response.data);
+                });
+            })();
+        }, 30000);
+        return () => clearInterval(interval);
+    }, []);
 
     function handleLogout() {
         signOut();

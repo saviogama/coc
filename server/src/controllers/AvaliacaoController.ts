@@ -3,7 +3,7 @@ import db from '../database/connection';
 
 export default class AvaliacaoController {
     async index(request: Request, response: Response) {
-        const consulta = request.body;
+        const { avaliacoes } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')
@@ -17,13 +17,15 @@ export default class AvaliacaoController {
             })
         }
 
-        if (!consulta.id) {
-            return response.status(400).json({
-                error: 'Missing filters to search avaliacao'
-            });
-        }
         const avaliacao = await db('avaliacao')
-            .where('avaliacao.consulta_id', '=', consulta.id as string);
+            .where('id', avaliacoes)
+            .first();
+
+        if (!avaliacao) {
+            return response.status(401).json({
+                error: 'There is no one avaliacao with this id'
+            })
+        }
 
         return response.json(avaliacao);
     }

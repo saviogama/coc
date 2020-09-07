@@ -8,7 +8,7 @@ import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
 
 export default function UserHome() {
-    const [cpf, setCpf] = useState(null);
+    const [cpf, setCpf] = useState('');
     const [patients, setPatients] = useState([]);
     const { token, signOut } = useContext(StoreContext);
 
@@ -45,7 +45,7 @@ export default function UserHome() {
                 setPatients(response.data);
             })
         } catch (error) {
-            alert('Erro ao buscar paciente!');
+            alert('O CPF informado não está cadastrado.');
         }
     }
 
@@ -61,7 +61,7 @@ export default function UserHome() {
                 setPatients(response.data);
             })
         } catch (error) {
-            alert('Erro ao buscar paciente!');
+            alert('Erro ao buscar pacientes!');
         }
     }
 
@@ -74,11 +74,11 @@ export default function UserHome() {
                     Authorization: token,
                 }
             }).then(response => {
-                alert('Paciente deletado com sucesso');
+                alert('Cadastro deletado com sucesso');
                 window.location.reload(false);
             });
         } catch (error) {
-            alert('Erro ao deletar paciente!');
+            alert('Erro ao deletar cadastro.');
         }
     }
 
@@ -119,8 +119,6 @@ export default function UserHome() {
                         <p>{patient.nome}</p>
                         <strong>CPF:</strong>
                         <p>{patient.cpf}</p>
-                        <strong>RG:</strong>
-                        <p><p>{patient.rg}</p></p>
                         <button className="bt" type="button">
                             <FiTrash2 size={20} color="#a8a8b3" onClick={(e) => { deletePatient(e, patient.cpf) }} />
                         </button>
