@@ -5,6 +5,7 @@ import { MedRoute } from './routes/MedRoute';
 import Logon from './pages/Logon';
 import UserHome from './pages/UserHome';
 import NewPatient from './pages/NewPatient';
+import EditPatient from './pages/EditPatient';
 import UserAppointments from './pages/UserAppointments';
 import NewAppointment from './pages/NewAppointment';
 import DocAppointments from './pages/DocAppointments';
@@ -17,10 +18,11 @@ export default function Routes() {
             <Route exact path="/" component={Logon} />
             <UserRoute path="/user" component={UserHome} />
             <UserRoute path="/register" component={NewPatient} />
+            <UserRoute path="/edit/:cpf" component={EditPatient} />
             <UserRoute path="/appointments" component={UserAppointments} />
             <UserRoute path="/appointments-new" component={NewAppointment} />
             <MedRoute path="/home" component={DocAppointments} />
-            <MedRoute path="/evaluation" component={Evaluation} />
+            <MedRoute path="/evaluation/:id" component={Evaluation} />
         </Switch>
     )
 }

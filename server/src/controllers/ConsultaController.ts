@@ -3,7 +3,7 @@ import db from '../database/connection';
 
 export default class ConsultaController {
     async index(request: Request, response: Response) {
-        const patient = request.body;
+        const { consultas } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')
@@ -17,13 +17,15 @@ export default class ConsultaController {
             })
         }
 
-        if (!patient.cpf) {
-            return response.status(400).json({
-                error: 'Missing filters to search consulta'
-            });
-        }
         const consulta = await db('consulta')
-            .where('consulta.patient_id', '=', patient.cpf as string);
+            .where('id', consultas)
+            .first();
+
+        if (!consulta) {
+            return response.status(401).json({
+                error: 'There is no one consulta with this id'
+            })
+        }
 
         return response.json(consulta);
     }
@@ -45,25 +47,39 @@ export default class ConsultaController {
             return response.status(401).json({
                 error: 'Not authorized'
             })
-        } else {
-            try {
-                const today = await db('consulta').insert({
-                    tipo,
-                    patient_id
-                });
-
-                const today_id = today[0];
-
-                await db('today').insert({
-                    id: today_id
-                });
-
-            } catch (error) {
-                return response.status(400).json({
-                    error: 'Invalid patient id'
-                });
-            }
         }
+
+        const patient = await db('patients')
+            .where('cpf', patient_id)
+            .first();
+
+        if (!patient) {
+            return response.status(401).json({
+                error: 'There is no one patient with this cpf'
+            })
+        }
+
+        try {
+            const today = await db('consulta').insert({
+                tipo,
+                patient_id
+            });
+
+            const today_id = today[0];
+
+            await db('today').insert({
+                id: today_id,
+                cpf: patient_id,
+                nome: patient.nome,
+                tipo
+            });
+
+        } catch (error) {
+            return response.status(400).json({
+                error: 'Invalid patient id'
+            });
+        }
+
         return response.status(204).send();
     }
 

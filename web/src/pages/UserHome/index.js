@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
 import { FiLogOut, FiTrash2, FiEdit3 } from 'react-icons/fi';
@@ -11,6 +11,20 @@ export default function UserHome() {
     const [cpf, setCpf] = useState(null);
     const [patients, setPatients] = useState([]);
     const { token, signOut } = useContext(StoreContext);
+
+    const history = useHistory();
+
+    useEffect(() => {
+        (async () => {
+            await api.get('patients-all', {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                setPatients(response.data);
+            });
+        })();
+    }, [setPatients]);
 
     function handleLogout() {
         signOut();
@@ -51,6 +65,28 @@ export default function UserHome() {
         }
     }
 
+    async function deletePatient(e, patient) {
+        e.preventDefault();
+
+        try {
+            await api.delete(`patients/${patient}`, {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                alert('Paciente deletado com sucesso');
+                window.location.reload(false);
+            });
+        } catch (error) {
+            alert('Erro ao deletar paciente!');
+        }
+    }
+
+    async function editPatient(e, patient) {
+        e.preventDefault();
+        history.push(`/edit/${patient}`);
+    }
+
     return (
         <div className="profile-container">
             <header>
@@ -86,10 +122,10 @@ export default function UserHome() {
                         <strong>RG:</strong>
                         <p><p>{patient.rg}</p></p>
                         <button className="bt" type="button">
-                            <FiTrash2 size={20} color="#a8a8b3" />
+                            <FiTrash2 size={20} color="#a8a8b3" onClick={(e) => { deletePatient(e, patient.cpf) }} />
                         </button>
                         <button className="bt2" type="button">
-                            <FiEdit3 size={20} color="#a8a8b3" />
+                            <FiEdit3 size={20} color="#a8a8b3" onClick={(e) => { editPatient(e, patient.cpf) }} />
                         </button>
                     </li>
                 ))}

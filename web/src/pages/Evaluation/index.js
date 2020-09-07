@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import StoreContext from '../../contexts/context';
+import api from '../../services/api';
 import { FiArrowLeft } from 'react-icons/fi';
 import './styles.css';
 
 export default function Evaluation() {
+    const [consulta, setConsulta] = useState({});
+    const [patient, setPatient] = useState('');
+
     const [avl_olho_direito, setAvl_olho_direito] = useState('');
     const [avl_olho_esquerdo, setAvl_olho_esquerdo] = useState('');
     const [hda, setHda] = useState('');
@@ -22,9 +27,39 @@ export default function Evaluation() {
     const [dp, setDp] = useState('');
     const [fungoscopia, setFungoscopia] = useState('');
 
+    const { token, signOut } = useContext(StoreContext);
+    const { id } = useParams();
     const history = useHistory();
 
-    async function handleNewPacient(e) {
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            await api.get(`today/${id}`, {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                setConsulta(response.data);
+                const patientCpf = response.data.cpf;
+
+                api.get('patients', {
+                    params: {
+                        'cpf': patientCpf
+                    },
+                    headers: {
+                        Authorization: token
+                    }
+                }).then(response2 => {
+                    setPatient(response2.data[0]);
+                });
+            });
+        })();
+    }, [setConsulta]);
+
+    async function handleNewPatient(e) {
         e.preventDefault();
     }
 
@@ -38,19 +73,19 @@ export default function Evaluation() {
                     </Link>
                     <h1>Informações adicionais do paciente</h1>
                     <strong>Nome:</strong>
-                    <p>José Savio Gama Macêdo da Silva Cordeiro</p>
+                    <p>{patient.nome}</p>
                     <strong>Idade:</strong>
-                    <p>35 anos</p>
+                    <p>{patient.idade}</p>
                     <strong>Profissão:</strong>
-                    <p>Jogador de bicho</p>
+                    <p>{patient.profissao}</p>
                     <strong>Convênio:</strong>
-                    <p>Top</p>
+                    <p>{patient.convenio}</p>
                     <strong>Tipo de consulta:</strong>
-                    <p>Teste de olhinho</p>
+                    <p>{consulta.tipo}</p>
                     <strong>Antecedentes pessoais:</strong>
-                    <p>Não tem</p>
+                    <p>{patient.antecedentes_pessoais}</p>
                 </section>
-                <form onSubmit={handleNewPacient}>
+                <form onSubmit={handleNewPatient}>
                     <strong>HDA:</strong>
                     <input
                         placeholder="HDA"

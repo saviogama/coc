@@ -21,11 +21,8 @@ export default class ConsultaController {
         return response.json(today);
     }
 
-    async create(request: Request, response: Response) {
-        const {
-            today
-        } = request.body;
-
+    async appointment(request: Request, response: Response) {
+        const { consultas } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')
@@ -37,25 +34,23 @@ export default class ConsultaController {
             return response.status(401).json({
                 error: 'Not authorized'
             })
-        } else {
-            try {
-                await db('today').insert({
-                    id: today
-                });
-            } catch (error) {
-                return response.status(400).json({
-                    error: 'Invalid consulta id'
-                });
-            }
         }
-        return response.status(204).send();
+
+        const consulta = await db('today')
+            .where('id', consultas)
+            .first();
+
+        if (!consulta) {
+            return response.status(401).json({
+                error: 'There is no one consulta with this id'
+            })
+        }
+
+        return response.json(consulta);
     }
 
     async delete(request: Request, response: Response) {
-        const {
-            today
-        } = request.body;
-
+        const { today } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')

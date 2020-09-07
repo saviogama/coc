@@ -1,16 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import StoreContext from '../../contexts/context';
+import api from '../../services/api';
 import { FiArrowLeft, FiCheck } from 'react-icons/fi';
 import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
 
 export default function UserAppointments() {
-    const [incidents, setIncidents] = useState([]);
+    const [consultas, setConsultas] = useState([]);
+
+    const { token } = useContext(StoreContext);
     const history = useHistory();
 
-    function handleLogout() {
-        localStorage.clear();
-        history.push('/');
+    useEffect(() => {
+        (async () => {
+            await api.get('today', {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                setConsultas(response.data);
+            });
+        })();
+    }, [setConsultas]);
+
+    async function deleteConsulta(e, id) {
+        e.preventDefault();
+
+        try {
+            await api.delete(`today/${id}`, {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                window.location.reload(false);
+            });
+        } catch (error) {
+            alert('Erro ao deletar paciente!');
+        }
     }
 
     return (
@@ -25,17 +52,19 @@ export default function UserAppointments() {
             </header>
             <h2>Consultas do dia</h2>
             <ul>
-                <li>
-                    <strong>Nome:</strong>
-                    <p>José Savio Gama Macêdo da Silva Cordeiro</p>
-                    <strong>CPF:</strong>
-                    <p>118.321.494-47</p>
-                    <strong>Tipo de consulta:</strong>
-                    <p>Teste de olhinho</p>
-                    <button className="bt" type="button">
-                        <FiCheck size={20} color="#a8a8b3" />
-                    </button>
-                </li>
+                {consultas.map(consulta => (
+                    <li key={consulta.id}>
+                        <strong>Nome:</strong>
+                        <p>{consulta.nome}</p>
+                        <strong>CPF:</strong>
+                        <p>{consulta.cpf}</p>
+                        <strong>Tipo de consulta:</strong>
+                        <p>{consulta.tipo}</p>
+                        <button className="bt" type="button">
+                            <FiCheck size={20} color="#a8a8b3" onClick={(e) => { deleteConsulta(e, consulta.id) }} />
+                        </button>
+                    </li>
+                ))}
             </ul>
         </div>
     );
