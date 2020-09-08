@@ -118,7 +118,6 @@ export default function Evaluation() {
                 }
             });
             history.push(`/review/${consulta.id}`);
-            //remover o deletar de consulta do usuario, pois o today ja sera deletado apos a consulta finalizar
         } catch (err) {
             alert('Erro ao confirmar avaliação');
         }

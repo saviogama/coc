@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
-import { FiArrowLeft } from 'react-icons/fi';
+import { DownloadAnotacao } from '../RenderAnotacao';
+import { DownloadAtestado } from '../RenderAtestado';
+import { DownloadPrescricao } from '../RenderPrescricao';
 import './styles.css';
 
 export default function Review() {
@@ -17,46 +19,90 @@ export default function Review() {
         window.scrollTo(0, 0);
     }, []);
 
+    useEffect(() => {
+        (async () => {
+            await api.get(`avaliacao/${id}`, {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                setAvaliacao(response.data);
+            });
+        })();
+    }, []);
+
+    useEffect(() => {
+        (async () => {
+            await api.get(`today/${id}`, {
+                headers: {
+                    Authorization: token,
+                }
+            }).then(response => {
+                const patientCpf = response.data.cpf;
+
+                api.get('patients', {
+                    params: {
+                        'cpf': patientCpf
+                    },
+                    headers: {
+                        Authorization: token
+                    }
+                }).then(response2 => {
+                    setPatient(response2.data[0]);
+                });
+            });
+        })();
+    }, []);
+
+    async function finalizarAvaliacao(e) {
+        e.preventDefault();
+
+        await api.delete(`/today/${id}`, {
+            headers: {
+                Authorization: token,
+            }
+        });
+        history.push("/home");
+    }
+
     return (
         <div className="new-incident-container">
             <div className="content">
                 <section>
-                    <Link className="back-link" to="/home">
-                        <FiArrowLeft size={16} color="#52658c" />
-                        Voltar
-                    </Link>
                     <h1>Revisão da avaliação</h1>
                     <strong>Nome:</strong>
-                    <p>Teste</p>
+                    <p>{patient.nome}</p>
                     <strong>CPF:</strong>
-                    <p>111.111.111.19</p>
+                    <p>{patient.cpf}</p>
                     <strong>HDA:</strong>
-                    <p>123</p>
+                    <p>{avaliacao.hda}</p>
                     <strong>Tonometria:</strong>
-                    <p>OE: 123 / OD: 123</p>
+                    <p>OE: {avaliacao.tonometria_olho_esquerdo} / OD: {avaliacao.tonometria_olho_direito}</p>
                     <strong>Inspeção:</strong>
-                    <p>123</p>
+                    <p>{avaliacao.inspecao}</p>
                     <strong>PPC:</strong>
-                    <p>123</p>
+                    <p>{avaliacao.inspecao_ppc}</p>
                     <strong>Refração (esférico):</strong>
-                    <p>OE: 123 / OD: 123</p>
+                    <p>OE: {avaliacao.refracao_olho_esquerdo_esferico} / OD: {avaliacao.refracao_olho_direito_esferico}</p>
                     <strong>Refração (cilindro):</strong>
-                    <p>OE: 123 / OD: 123</p>
+                    <p>OE: {avaliacao.refracao_olho_esquerdo_cilindro} / OD: {avaliacao.refracao_olho_direito_cilindro}</p>
                     <strong>Refração (eixo):</strong>
-                    <p>OE: 123 / OD: 123</p>
+                    <p>OE: {avaliacao.refracao_olho_esquerdo_eixo}/ OD: {avaliacao.refracao_olho_direito_eixo}</p>
                     <strong>Refração (adição):</strong>
-                    <p>OE: 123 / OD: 123</p>
+                    <p>OE: {avaliacao.refracao_olho_esquerdo_adicao} / OD: {avaliacao.refracao_olho_direito_adicao}</p>
+                    <strong>Refração (dp):</strong>
+                    <p>{avaliacao.dp}</p>
                     <strong>Biomicroscopia:</strong>
-                    <p>123</p>
+                    <p>{avaliacao.biomicroscopia}</p>
                     <strong>Fundoscopia:</strong>
-                    <p>123</p>
+                    <p>{avaliacao.fungoscopia}</p>
                     <strong>AVL:</strong>
-                    <p>OE: 123 / OD: 123</p>
+                    <p>OE: {avaliacao.avl_olho_esquerdo} / OD: {avaliacao.avl_olho_direito}</p>
                 </section>
-                <form>
-                    <button className="button">Gerar atestado médico</button>
-                    <button className="button">Gerar prescrição de lentes de correção</button>
-                    <button className="button">Gerar folha de anotações</button>
+                <form onSubmit={finalizarAvaliacao}>
+                    <DownloadAnotacao />
+                    <DownloadPrescricao />
+                    <DownloadAtestado name={patient.nome}/>
                     <button className="button" type="submit">Finalizar avaliação</button>
                 </form>
             </div>

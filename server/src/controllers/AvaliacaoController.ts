@@ -18,7 +18,7 @@ export default class AvaliacaoController {
         }
 
         const avaliacao = await db('avaliacao')
-            .where('id', avaliacoes)
+            .where('consulta_id', avaliacoes)
             .first();
 
         if (!avaliacao) {

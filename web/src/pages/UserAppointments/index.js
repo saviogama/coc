@@ -23,6 +23,21 @@ export default function UserAppointments() {
         })();
     }, [setConsultas]);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            (async () => {
+                await api.get('today', {
+                    headers: {
+                        Authorization: token,
+                    }
+                }).then(response => {
+                    setConsultas(response.data);
+                });
+            })();
+        }, 30000);
+        return () => clearInterval(interval);
+    }, []);
+
     async function deleteConsulta(e, id) {
         e.preventDefault();
 
