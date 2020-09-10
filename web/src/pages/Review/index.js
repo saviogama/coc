@@ -102,7 +102,7 @@ export default function Review() {
                 <form onSubmit={finalizarAvaliacao}>
                     <DownloadAnotacao />
                     <DownloadPrescricao />
-                    <DownloadAtestado name={patient.nome}/>
+                    <DownloadAtestado />
                     <button className="button" type="submit">Finalizar avaliação</button>
                 </form>
             </div>

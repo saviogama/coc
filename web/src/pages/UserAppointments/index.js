@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
+import { stringfy } from '../../components/Formatter';
 import { FiArrowLeft, FiCheck } from 'react-icons/fi';
 import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
@@ -74,7 +75,7 @@ export default function UserAppointments() {
                         <strong>CPF:</strong>
                         <p>{consulta.cpf}</p>
                         <strong>Tipo de consulta:</strong>
-                        <p>{consulta.tipo}</p>
+                        <p>{stringfy(consulta.tipo)}</p>
                         <button className="bt" type="button">
                             <FiCheck size={20} color="#a8a8b3" onClick={(e) => { deleteConsulta(e, consulta.id) }} />
                         </button>
