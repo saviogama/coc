@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
+import { stringfy } from '../../components/Formatter';
 import { FiArrowLeft, FiCheck } from 'react-icons/fi';
 import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
@@ -10,7 +11,6 @@ export default function UserAppointments() {
     const [consultas, setConsultas] = useState([]);
 
     const { token } = useContext(StoreContext);
-    const history = useHistory();
 
     useEffect(() => {
         (async () => {
@@ -24,6 +24,21 @@ export default function UserAppointments() {
         })();
     }, [setConsultas]);
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            (async () => {
+                await api.get('today', {
+                    headers: {
+                        Authorization: token,
+                    }
+                }).then(response => {
+                    setConsultas(response.data);
+                });
+            })();
+        }, 30000);
+        return () => clearInterval(interval);
+    }, []);
+
     async function deleteConsulta(e, id) {
         e.preventDefault();
 
@@ -36,7 +51,8 @@ export default function UserAppointments() {
                 window.location.reload(false);
             });
         } catch (error) {
-            alert('Erro ao deletar paciente!');
+            alert('A consulta não existe ou já foi deletada.');
+            window.location.reload(false);
         }
     }
 
@@ -59,7 +75,7 @@ export default function UserAppointments() {
                         <strong>CPF:</strong>
                         <p>{consulta.cpf}</p>
                         <strong>Tipo de consulta:</strong>
-                        <p>{consulta.tipo}</p>
+                        <p>{stringfy(consulta.tipo)}</p>
                         <button className="bt" type="button">
                             <FiCheck size={20} color="#a8a8b3" onClick={(e) => { deleteConsulta(e, consulta.id) }} />
                         </button>

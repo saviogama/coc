@@ -12,7 +12,7 @@ export default class ConsultaController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Token inválido'
             })
         }
 
@@ -22,7 +22,7 @@ export default class ConsultaController {
     }
 
     async appointment(request: Request, response: Response) {
-        const { consultas } = request.params;
+        const { appointment } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')
@@ -32,17 +32,17 @@ export default class ConsultaController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Token inválido'
             })
         }
 
         const consulta = await db('today')
-            .where('id', consultas)
+            .where('id', appointment)
             .first();
 
         if (!consulta) {
             return response.status(401).json({
-                error: 'There is no one consulta with this id'
+                error: 'Não existe nenhuma consulta com esse id'
             })
         }
 
@@ -60,7 +60,7 @@ export default class ConsultaController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Token inválido'
             })
         } else {
             try {
@@ -69,7 +69,7 @@ export default class ConsultaController {
                     .delete();
             } catch (error) {
                 return response.status(400).json({
-                    error: 'There is no one consult with this id.'
+                    error: 'Não existe nenhuma consulta com esse id'
                 });
             }
         }

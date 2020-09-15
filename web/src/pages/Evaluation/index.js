@@ -7,7 +7,8 @@ import './styles.css';
 
 export default function Evaluation() {
     const [consulta, setConsulta] = useState({});
-    const [patient, setPatient] = useState('');
+    const [patient, setPatient] = useState([]);
+    const [tipo, setTipo] = useState('');
 
     const [avl_olho_direito, setAvl_olho_direito] = useState('');
     const [avl_olho_esquerdo, setAvl_olho_esquerdo] = useState('');
@@ -25,9 +26,10 @@ export default function Evaluation() {
     const [refracao_olho_direito_adicao, setRefracao_olho_direito_adicao] = useState('');
     const [refracao_olho_esquerdo_adicao, setRefracao_olho_esquerdo_adicao] = useState('');
     const [dp, setDp] = useState('');
+    const [biomicroscopia, setBiomicroscopia] = useState('');
     const [fungoscopia, setFungoscopia] = useState('');
 
-    const { token, signOut } = useContext(StoreContext);
+    const { token } = useContext(StoreContext);
     const { id } = useParams();
     const history = useHistory();
 
@@ -43,6 +45,31 @@ export default function Evaluation() {
                 }
             }).then(response => {
                 setConsulta(response.data);
+
+                if (response.data.tipo === 'curva_tensional') {
+                    setTipo('Curva tensional');
+                }
+                else if (response.data.tipo === 'fundo_de_olho') {
+                    setTipo('Fundo de olho');
+                }
+                else if (response.data.tipo === 'teste_de_olhinho') {
+                    setTipo('Teste de olhinho');
+                }
+                else if (response.data.tipo === 'mapeamento_de_retina') {
+                    setTipo('Mapeamento de retina');
+                }
+                else if (response.data.tipo === 'paquimetria') {
+                    setTipo('Paquimetria');
+                }
+                else if (response.data.tipo === 'gonioscopia') {
+                    setTipo('Gonioscopia');
+                }
+                else if (response.data.tipo === 'pressao_intraocular') {
+                    setTipo('Pressão intraocular');
+                } else {
+                    setTipo('');
+                }
+
                 const patientCpf = response.data.cpf;
 
                 api.get('patients', {
@@ -59,8 +86,41 @@ export default function Evaluation() {
         })();
     }, [setConsulta]);
 
-    async function handleNewPatient(e) {
+    async function handleNewEvaluation(e) {
         e.preventDefault();
+
+        const data = {
+            avl_olho_direito,
+            avl_olho_esquerdo,
+            hda,
+            tonometria_olho_direito,
+            tonometria_olho_esquerdo,
+            inspecao,
+            inspecao_ppc,
+            refracao_olho_direito_esferico,
+            refracao_olho_esquerdo_esferico,
+            refracao_olho_direito_cilindro,
+            refracao_olho_esquerdo_cilindro,
+            refracao_olho_direito_eixo,
+            refracao_olho_esquerdo_eixo,
+            refracao_olho_direito_adicao,
+            refracao_olho_esquerdo_adicao,
+            dp,
+            biomicroscopia,
+            fungoscopia,
+            'consulta_id': id
+        };
+
+        try {
+            await api.post('/avaliacao', data, {
+                headers: {
+                    'Authorization': token
+                }
+            });
+            history.push(`/review/${consulta.id}`);
+        } catch (err) {
+            alert('Erro ao confirmar avaliação');
+        }
     }
 
     return (
@@ -81,11 +141,11 @@ export default function Evaluation() {
                     <strong>Convênio:</strong>
                     <p>{patient.convenio}</p>
                     <strong>Tipo de consulta:</strong>
-                    <p>{consulta.tipo}</p>
+                    <p>{tipo}</p>
                     <strong>Antecedentes pessoais:</strong>
                     <p>{patient.antecedentes_pessoais}</p>
                 </section>
-                <form onSubmit={handleNewPatient}>
+                <form onSubmit={handleNewEvaluation}>
                     <strong>HDA:</strong>
                     <input
                         placeholder="HDA"
@@ -174,9 +234,15 @@ export default function Evaluation() {
                         value={dp}
                         onChange={e => setDp(e.target.value)}
                     />
-                    <strong>Fungoscopia:</strong>
+                    <strong>Biomicroscopia:</strong>
                     <input
-                        placeholder="Fungoscopia"
+                        placeholder="Biomicroscopia"
+                        value={biomicroscopia}
+                        onChange={e => setBiomicroscopia(e.target.value)}
+                    />
+                    <strong>Fundoscopia:</strong>
+                    <input
+                        placeholder="Fundoscopia"
                         value={fungoscopia}
                         onChange={e => setFungoscopia(e.target.value)}
                     />

@@ -10,7 +10,7 @@ import UserAppointments from './pages/UserAppointments';
 import NewAppointment from './pages/NewAppointment';
 import DocAppointments from './pages/DocAppointments';
 import Evaluation from './pages/Evaluation';
-import GenerateDocs from './pages/GenerateDocs';
+import Review from './pages/Review';
 
 export default function Routes() {
     return (
@@ -23,6 +23,7 @@ export default function Routes() {
             <UserRoute path="/appointments-new" component={NewAppointment} />
             <MedRoute path="/home" component={DocAppointments} />
             <MedRoute path="/evaluation/:id" component={Evaluation} />
+            <MedRoute path="/review/:id" component={Review} />
         </Switch>
     )
 }

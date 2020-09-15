@@ -12,7 +12,7 @@ export default class PatientsController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Token inválido'
             })
         }
 
@@ -32,26 +32,26 @@ export default class PatientsController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Token inválido'
             })
         }
 
-        if (!filters.cpf) {
+        if (!filters.nome) {
             return response.status(400).json({
-                error: 'Missing filters to search patients'
+                error: 'Falta de filtros para buscar o paciente'
             });
         }
 
         const patients = await db('patients')
-            .where('patients.cpf', '=', filters.cpf as string);
+            .where('nome', filters.nome as string);
 
         return response.json(patients);
     }
 
     async create(request: Request, response: Response) {
         const {
-            cpf,
             nome,
+            cpf,
             rg,
             data_nascimento,
             idade,
@@ -77,41 +77,35 @@ export default class PatientsController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Token inválido'
             })
         } else {
-            try {
-                await db('patients').insert({
-                    cpf,
-                    nome,
-                    rg,
-                    data_nascimento,
-                    idade,
-                    reg,
-                    rua,
-                    numero,
-                    bairro,
-                    nome_pai,
-                    nome_mae,
-                    telefone,
-                    email,
-                    profissao,
-                    convenio,
-                    antecedentes_pessoais
-                });
-            } catch (error) {
-                return response.status(400).json({
-                    error: 'There is already a patient registered with that CPF.'
-                });
-            }
+            await db('patients').insert({
+                nome,
+                cpf,
+                rg,
+                data_nascimento,
+                idade,
+                reg,
+                rua,
+                numero,
+                bairro,
+                nome_pai,
+                nome_mae,
+                telefone,
+                email,
+                profissao,
+                convenio,
+                antecedentes_pessoais
+            });
         }
         return response.status(204).send();
     }
 
     async update(request: Request, response: Response) {
         const {
-            cpf,
             nome,
+            cpf,
             rg,
             data_nascimento,
             idade,
@@ -127,7 +121,7 @@ export default class PatientsController {
             convenio,
             antecedentes_pessoais
         } = request.body;
-
+        const { patient_id } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')
@@ -137,51 +131,46 @@ export default class PatientsController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Token inválido'
             })
         }
 
         const patient = await db('patients')
-            .where('cpf', cpf)
+            .where('id', patient_id)
             .first();
 
         if (!patient) {
             return response.status(401).json({
-                error: 'There is no one patient with this cpf'
+                error: 'Não existe nenhum paciente com esse id'
             });
         }
 
-        try {
-            await db('patients')
-                .where('cpf', cpf)
-                .update({
-                    nome,
-                    rg,
-                    data_nascimento,
-                    idade,
-                    reg,
-                    rua,
-                    numero,
-                    bairro,
-                    nome_pai,
-                    nome_mae,
-                    telefone,
-                    email,
-                    profissao,
-                    convenio,
-                    antecedentes_pessoais
-                });
-        } catch (error) {
-            return response.status(400).json({
-                error: 'There is no one patient with this cpf.'
+        await db('patients')
+            .where('id', patient_id)
+            .update({
+                nome,
+                cpf,
+                rg,
+                data_nascimento,
+                idade,
+                reg,
+                rua,
+                numero,
+                bairro,
+                nome_pai,
+                nome_mae,
+                telefone,
+                email,
+                profissao,
+                convenio,
+                antecedentes_pessoais
             });
-        }
 
         return response.status(204).send();
     }
 
     async delete(request: Request, response: Response) {
-        const { cpf } = request.params;
+        const { patient_id } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')
@@ -190,29 +179,23 @@ export default class PatientsController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Token inválido'
             })
         }
 
         const patient = await db('patients')
-            .where('cpf', cpf)
+            .where('id', patient_id)
             .first();
 
         if (!patient) {
             return response.status(401).json({
-                error: 'There is no one patient with this cpf'
+                error: 'Não existe um paciente com esse id'
             })
         }
 
-        try {
-            await db('patients')
-                .where('cpf', cpf)
-                .delete();
-        } catch (error) {
-            return response.status(400).json({
-                error: 'There is no one patient with this cpf.'
-            });
-        }
+        await db('patients')
+            .where('id', patient_id)
+            .delete();
 
         return response.status(204).send();
     }
