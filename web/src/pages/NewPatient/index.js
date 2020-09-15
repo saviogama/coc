@@ -31,8 +31,8 @@ export default function NewPatient() {
         e.preventDefault();
 
         const data = {
-            cpf,
             nome,
+            cpf,
             rg,
             data_nascimento,
             idade,
@@ -83,7 +83,6 @@ export default function NewPatient() {
                         placeholder="CPF"
                         value={cpf}
                         onChange={e => setCpf(formatter(e.target.value))}
-                        required
                     />
                     <input
                         placeholder="RG"
@@ -132,6 +131,7 @@ export default function NewPatient() {
                         placeholder="Nome da mãe"
                         value={nome_mae}
                         onChange={e => setNome_mae(e.target.value)}
+                        required
                     />
                     <input
                         placeholder="Telefone"
