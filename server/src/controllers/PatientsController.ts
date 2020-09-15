@@ -121,7 +121,7 @@ export default class PatientsController {
             convenio,
             antecedentes_pessoais
         } = request.body;
-        const { patient_id } = request.params;
+        const { patient } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')
@@ -135,18 +135,18 @@ export default class PatientsController {
             })
         }
 
-        const patient = await db('patients')
-            .where('id', patient_id)
+        const result = await db('patients')
+            .where('id', patient)
             .first();
 
-        if (!patient) {
+        if (!result) {
             return response.status(401).json({
                 error: 'Não existe nenhum paciente com esse id'
             });
         }
 
         await db('patients')
-            .where('id', patient_id)
+            .where('id', patient)
             .update({
                 nome,
                 cpf,
@@ -170,7 +170,7 @@ export default class PatientsController {
     }
 
     async delete(request: Request, response: Response) {
-        const { patient_id } = request.params;
+        const { patient } = request.params;
         const id = request.headers.authorization;
 
         const user = await db('users')
@@ -183,18 +183,18 @@ export default class PatientsController {
             })
         }
 
-        const patient = await db('patients')
-            .where('id', patient_id)
+        const result = await db('patients')
+            .where('id', patient)
             .first();
 
-        if (!patient) {
+        if (!result) {
             return response.status(401).json({
                 error: 'Não existe um paciente com esse id'
             })
         }
 
         await db('patients')
-            .where('id', patient_id)
+            .where('id', patient)
             .delete();
 
         return response.status(204).send();

@@ -114,16 +114,16 @@ export default function UserHome() {
             <h2>Pessoas cadastradas</h2>
             <ul>
                 {patients.map(patient => (
-                    <li key={patient.cpf}>
+                    <li key={patient.id}>
                         <strong>Nome:</strong>
                         <p>{patient.nome}</p>
-                        <strong>CPF:</strong>
-                        <p>{patient.cpf}</p>
+                        <strong>Nome da mãe:</strong>
+                        <p>{patient.nome_mae}</p>
                         <button className="bt" type="button">
-                            <FiTrash2 size={20} color="#a8a8b3" onClick={(e) => { deletePatient(e, patient.cpf) }} />
+                            <FiTrash2 size={20} color="#a8a8b3" onClick={(e) => { deletePatient(e, patient.id) }} />
                         </button>
                         <button className="bt2" type="button">
-                            <FiEdit3 size={20} color="#a8a8b3" onClick={(e) => { editPatient(e, patient.cpf) }} />
+                            <FiEdit3 size={20} color="#a8a8b3" onClick={(e) => { editPatient(e, patient.id) }} />
                         </button>
                     </li>
                 ))}
