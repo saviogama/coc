@@ -2,18 +2,19 @@ import Knex from 'knex';
 
 export async function up(knex: Knex) {
     return knex.schema.createTable('patients', table => {
-        table.string('cpf').primary().notNullable();
+        table.increments('id').primary();
         table.string('nome').notNullable();
+        table.string('cpf');
         table.string('rg');
         table.string('data_nascimento');
-        table.integer('idade');
+        table.string('idade');
         table.string('reg');
         table.string('rua');
-        table.integer('numero');
+        table.string('numero');
         table.string('bairro');
         table.string('nome_pai');
         table.string('nome_mae');
-        table.integer('telefone');
+        table.string('telefone');
         table.string('email');
         table.string('profissao');
         table.string('convenio');

@@ -11,7 +11,7 @@ export default class UsersController {
         }
 
         return response.status(400).json({
-            error: 'Invalid master key'
+            error: 'Chave mestre inválida'
         });
     }
 
@@ -33,12 +33,12 @@ export default class UsersController {
                 });
             } catch (error) {
                 return response.status(400).json({
-                    error: 'Invalid id'
+                    error: 'Já existe um usuário cadastrado com esse id'
                 });
             }
         } else {
             return response.status(400).json({
-                error: 'Invalid master key'
+                error: 'Chave mestre inválida'
             });
         }
         return response.send();
@@ -56,13 +56,13 @@ export default class UsersController {
 
         if (!user) {
             return response.status(401).json({
-                error: 'Id not found'
+                error: 'Não foi encontrado nenhum usuário com esse id'
             })
         }
 
         if (user.password != password) {
             return response.status(401).json({
-                error: 'Not authorized'
+                error: 'Senha inválida'
             })
         }
 

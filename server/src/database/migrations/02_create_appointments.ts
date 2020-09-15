@@ -1,7 +1,7 @@
 import Knex from 'knex';
 
 export async function up(knex: Knex) {
-    return knex.schema.createTable('consulta', table => {
+    return knex.schema.createTable('appointments', table => {
         table.increments('id').primary();
         table.enu('tipo',
             ['curva_tensional',
@@ -17,7 +17,7 @@ export async function up(knex: Knex) {
 
         table.integer('patient_id')
             .notNullable()
-            .references('cpf')
+            .references('id')
             .inTable('patients')
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
@@ -25,5 +25,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-    return knex.schema.dropTable('consulta');
+    return knex.schema.dropTable('appointments');
 }
