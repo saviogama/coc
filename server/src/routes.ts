@@ -17,7 +17,8 @@ routes.post('/privileges', usersController.create); //ok
 routes.post('/login', usersController.login); //ok
 
 routes.get('/patients-all', patientsController.all); //ok
-routes.get('/patients', patientsController.index); //ok
+routes.get('/patients-name', patientsController.name); //ok
+routes.get('/patients/:patient', patientsController.index); //ok
 routes.post('/patients', patientsController.create); //ok
 routes.put('/patients/:patient', patientsController.update); //ok
 routes.delete('/patients/:patient', patientsController.delete); //ok

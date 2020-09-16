@@ -21,7 +21,7 @@ export default class PatientsController {
         return response.json(patients);
     }
 
-    async index(request: Request, response: Response) {
+    async name(request: Request, response: Response) {
         const filters = request.query;
         const id = request.headers.authorization;
 
@@ -38,12 +38,46 @@ export default class PatientsController {
 
         if (!filters.nome) {
             return response.status(400).json({
-                error: 'Falta de filtros para buscar o paciente'
+                error: 'Faltando filtros para buscar paciente'
             });
         }
 
         const patients = await db('patients')
             .where('nome', filters.nome as string);
+
+        if (!patients) {
+            return response.status(400).json({
+                error: 'Paciente não encontrado'
+            });
+        }
+
+        return response.json(patients);
+    }
+
+    async index(request: Request, response: Response) {
+        const { patient } = request.params;
+        const id = request.headers.authorization;
+
+        const user = await db('users')
+            .where('id', id)
+            .select('id')
+            .first();
+
+        if (!user) {
+            return response.status(401).json({
+                error: 'Token inválido'
+            })
+        }
+
+        const patients = await db('patients')
+            .where('id', patient)
+            .first();
+
+        if (!patients) {
+            return response.status(400).json({
+                error: 'Paciente não encontrado'
+            })
+        }
 
         return response.json(patients);
     }

@@ -17,7 +17,7 @@ export default class EvaluationsController {
             })
         }
 
-        const avaliacao = await db('evaluation')
+        const avaliacao = await db('evaluations')
             .where('consulta_id', evaluation)
             .first();
 
@@ -68,14 +68,14 @@ export default class EvaluationsController {
             })
         }
 
-        const verify = await db('evaluation')
+        const verify = await db('evaluations')
             .where('consulta_id', consulta_id)
             .select('consulta_id')
             .first();
 
         if (!verify) {
             try {
-                await db('avaliacao').insert({
+                await db('evaluations').insert({
                     hda,
                     longe_esferico_od,
                     longe_esferico_oe,
@@ -113,7 +113,7 @@ export default class EvaluationsController {
         }
         else {
             try {
-                await db('evaluation').insert({
+                await db('evaluations').insert({
                     hda,
                     longe_esferico_od,
                     longe_esferico_oe,

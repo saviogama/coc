@@ -69,6 +69,7 @@ export default class AppointmentsController {
 
             await db('today').insert({
                 id: today_id,
+                patient_id: patient.id,
                 nome: patient.nome,
                 nome_mae: patient.nome_mae,
                 tipo

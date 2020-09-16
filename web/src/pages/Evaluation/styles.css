@@ -53,3 +53,13 @@
 .new-incident-container .content form div {
     display: flex;
 }
+
+#od {
+    align-self: center;
+    margin-right: 5px;
+}
+
+#oe {
+    align-self: center;
+    margin-right: 8px;
+}

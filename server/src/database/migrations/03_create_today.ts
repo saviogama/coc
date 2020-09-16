@@ -3,6 +3,7 @@ import Knex from 'knex';
 export async function up(knex: Knex) {
     return knex.schema.createTable('today', table => {
         table.string('id').primary();
+        table.string('patient_id').notNullable();
         table.string('nome').notNullable();
         table.string('nome_mae');
         table.enu('tipo',

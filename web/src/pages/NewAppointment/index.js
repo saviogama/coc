@@ -7,7 +7,7 @@ import { formatter } from '../../components/Formatter';
 import './styles.css';
 
 export default function NewAppointment() {
-    const [cpf, setCpf] = useState('');
+    const [id, setId] = useState('');
     const [tipo, setTipo] = useState('');
 
     const { token } = useContext(StoreContext);
@@ -18,11 +18,11 @@ export default function NewAppointment() {
 
         const data = {
             tipo,
-            'patient_id': cpf
+            'patient_id': id
         };
 
         try {
-            await api.post('/consulta', data, {
+            await api.post('/appointments', data, {
                 headers: {
                     'Authorization': token
                 }
@@ -38,7 +38,7 @@ export default function NewAppointment() {
             <div className="content">
                 <section>
                     <h1>Nova consulta</h1>
-                    <p>Informe o CPF de um paciente cadastrado e o tipo da consulta.</p>
+                    <p>Informe o ID de um paciente cadastrado e o tipo da consulta.</p>
                     <Link className="back-link" to="/appointments">
                         <FiArrowLeft size={16} color="#52658c" />
                         Voltar
@@ -46,9 +46,9 @@ export default function NewAppointment() {
                 </section>
                 <form onSubmit={handleNewAppointment}>
                     <input
-                        placeholder="CPF"
-                        value={cpf}
-                        onChange={e => setCpf(formatter(e.target.value))}
+                        placeholder="ID"
+                        value={id}
+                        onChange={e => setId(e.target.value)}
                         required
                     />
                     <select value={tipo} onChange={e => setTipo(e.target.value)}>
