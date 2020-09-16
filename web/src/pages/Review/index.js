@@ -21,7 +21,7 @@ export default function Review() {
 
     useEffect(() => {
         (async () => {
-            await api.get(`avaliacao/${id}`, {
+            await api.get(`evaluations/${id}`, {
                 headers: {
                     Authorization: token,
                 }
@@ -38,17 +38,14 @@ export default function Review() {
                     Authorization: token,
                 }
             }).then(response => {
-                const patientCpf = response.data.cpf;
+                const patientId = response.data.patient_id;
 
-                api.get('patients', {
-                    params: {
-                        'cpf': patientCpf
-                    },
+                api.get(`patients${patientId}`, {
                     headers: {
                         Authorization: token
                     }
                 }).then(response2 => {
-                    setPatient(response2.data[0]);
+                    setPatient(response2.data);
                 });
             });
         })();
@@ -72,32 +69,30 @@ export default function Review() {
                     <h1>Revisão da avaliação</h1>
                     <strong>Nome:</strong>
                     <p>{patient.nome}</p>
-                    <strong>CPF:</strong>
-                    <p>{patient.cpf}</p>
                     <strong>HDA:</strong>
                     <p>{avaliacao.hda}</p>
-                    <strong>Tonometria:</strong>
-                    <p>OE: {avaliacao.tonometria_olho_esquerdo} / OD: {avaliacao.tonometria_olho_direito}</p>
-                    <strong>Inspeção:</strong>
-                    <p>{avaliacao.inspecao}</p>
-                    <strong>PPC:</strong>
-                    <p>{avaliacao.inspecao_ppc}</p>
                     <strong>Refração (esférico):</strong>
-                    <p>OE: {avaliacao.refracao_olho_esquerdo_esferico} / OD: {avaliacao.refracao_olho_direito_esferico}</p>
+                    <p>OD: {avaliacao.longe_esferico_od} / OE: {avaliacao.longe_esferico_oe}</p>
                     <strong>Refração (cilindro):</strong>
-                    <p>OE: {avaliacao.refracao_olho_esquerdo_cilindro} / OD: {avaliacao.refracao_olho_direito_cilindro}</p>
+                    <p>OD: {avaliacao.longe_cilindro_od} / OE: {avaliacao.longe_cilindro_oe}</p>
                     <strong>Refração (eixo):</strong>
-                    <p>OE: {avaliacao.refracao_olho_esquerdo_eixo}/ OD: {avaliacao.refracao_olho_direito_eixo}</p>
-                    <strong>Refração (adição):</strong>
-                    <p>OE: {avaliacao.refracao_olho_esquerdo_adicao} / OD: {avaliacao.refracao_olho_direito_adicao}</p>
-                    <strong>Refração (dp):</strong>
-                    <p>{avaliacao.dp}</p>
+                    <p>OD: {avaliacao.longe_eixo_od}/ OE: {avaliacao.longe_eixo_oe}</p>
+                    <strong>Adição (esférico):</strong>
+                    <p>OD: {avaliacao.perto_esferico_od} / OE: {avaliacao.perto_esferico_oe}</p>
+                    <strong>Adição (cilindro):</strong>
+                    <p>OD: {avaliacao.perto_cilindro_od} / OE: {avaliacao.perto_cilindro_oe}</p>
+                    <strong>Adição (eixo):</strong>
+                    <p>OD: {avaliacao.perto_eixo_od}/ OE: {avaliacao.perto_eixo_oe}</p>
+                    <strong>AVL:</strong>
+                    <p>OD: {avaliacao.avl_od} / OE: {avaliacao.avl_oe}</p>
+                    <strong>Tonometria:</strong>
+                    <p>OD: {avaliacao.tonometria_od} / OE: {avaliacao.tonometria_oe}</p>
                     <strong>Biomicroscopia:</strong>
                     <p>{avaliacao.biomicroscopia}</p>
                     <strong>Fundoscopia:</strong>
-                    <p>{avaliacao.fungoscopia}</p>
-                    <strong>AVL:</strong>
-                    <p>OE: {avaliacao.avl_olho_esquerdo} / OD: {avaliacao.avl_olho_direito}</p>
+                    <p>{avaliacao.fundoscopia}</p>
+                    <strong>Outros:</strong>
+                    <p>{avaliacao.outros}</p>
                 </section>
                 <form onSubmit={finalizarAvaliacao}>
                     <DownloadAnotacao />

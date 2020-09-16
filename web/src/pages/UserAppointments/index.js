@@ -72,8 +72,8 @@ export default function UserAppointments() {
                     <li key={consulta.id}>
                         <strong>Nome:</strong>
                         <p>{consulta.nome}</p>
-                        <strong>CPF:</strong>
-                        <p>{consulta.cpf}</p>
+                        <strong>Nome da mãe:</strong>
+                        <p>{consulta.nome_mae}</p>
                         <strong>Tipo de consulta:</strong>
                         <p>{stringfy(consulta.tipo)}</p>
                         <button className="bt" type="button">

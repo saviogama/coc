@@ -10,28 +10,30 @@ export default function Evaluation() {
     const [patient, setPatient] = useState([]);
     const [tipo, setTipo] = useState('');
 
-    const [avl_olho_direito, setAvl_olho_direito] = useState('');
-    const [avl_olho_esquerdo, setAvl_olho_esquerdo] = useState('');
     const [hda, setHda] = useState('');
-    const [tonometria_olho_direito, setTonometria_olho_direito] = useState('');
-    const [tonometria_olho_esquerdo, setTonometria_olho_esquerdo] = useState('');
-    const [inspecao, setInspecao] = useState('');
-    const [inspecao_ppc, setInspecao_ppc] = useState('');
-    const [refracao_olho_direito_esferico, setRefracao_olho_direito_esferico] = useState('');
-    const [refracao_olho_esquerdo_esferico, setRefracao_olho_esquerdo_esferico] = useState('');
-    const [refracao_olho_direito_cilindro, setRefracao_olho_direito_cilindro] = useState('');
-    const [refracao_olho_esquerdo_cilindro, setRefracao_olho_esquerdo_cilindro] = useState('');
-    const [refracao_olho_direito_eixo, setRefracao_olho_direito_eixo] = useState('');
-    const [refracao_olho_esquerdo_eixo, setRefracao_olho_esquerdo_eixo] = useState('');
-    const [refracao_olho_direito_adicao, setRefracao_olho_direito_adicao] = useState('');
-    const [refracao_olho_esquerdo_adicao, setRefracao_olho_esquerdo_adicao] = useState('');
-    const [dp, setDp] = useState('');
+    const [longe_esferico_od, setLonge_esferico_od] = useState('');
+    const [longe_esferico_oe, setLonge_esferico_oe] = useState('');
+    const [longe_cilindro_od, setLonge_cilindro_od] = useState('');
+    const [longe_cilindro_oe, setLonge_cilindro_oe] = useState('');
+    const [longe_eixo_od, setLonge_eixo_od] = useState('');
+    const [longe_eixo_oe, setLonge_eixo_oe] = useState('');
+    const [perto_esferico_od, setPerto_esferico_od] = useState('');
+    const [perto_esferico_oe, setPerto_esferico_oe] = useState('');
+    const [perto_cilindro_od, setPerto_cilindro_od] = useState('');
+    const [perto_cilindro_oe, setPerto_cilindro_oe] = useState('');
+    const [perto_eixo_od, setPerto_eixo_od] = useState('');
+    const [perto_eixo_oe, setPerto_eixo_oe] = useState('');
+    const [avl_od, setAvl_od] = useState('');
+    const [avl_oe, setAvl_oe] = useState('');
+    const [tonometria_od, setTonometria_od] = useState('');
+    const [tonometria_oe, setTonometria_oe] = useState('');
     const [biomicroscopia, setBiomicroscopia] = useState('');
-    const [fungoscopia, setFungoscopia] = useState('');
+    const [fundoscopia, setFundoscopia] = useState('');
+    const [outros, setOutros] = useState('');
 
     const { token } = useContext(StoreContext);
-    const { id } = useParams();
     const history = useHistory();
+    const { id } = useParams();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -70,17 +72,14 @@ export default function Evaluation() {
                     setTipo('');
                 }
 
-                const patientCpf = response.data.cpf;
+                const patientId = response.data.patient_id;
 
-                api.get('patients', {
-                    params: {
-                        'cpf': patientCpf
-                    },
+                api.get(`patients/${patientId}`, {
                     headers: {
                         Authorization: token
                     }
                 }).then(response2 => {
-                    setPatient(response2.data[0]);
+                    setPatient(response2.data);
                 });
             });
         })();
@@ -90,36 +89,38 @@ export default function Evaluation() {
         e.preventDefault();
 
         const data = {
-            avl_olho_direito,
-            avl_olho_esquerdo,
             hda,
-            tonometria_olho_direito,
-            tonometria_olho_esquerdo,
-            inspecao,
-            inspecao_ppc,
-            refracao_olho_direito_esferico,
-            refracao_olho_esquerdo_esferico,
-            refracao_olho_direito_cilindro,
-            refracao_olho_esquerdo_cilindro,
-            refracao_olho_direito_eixo,
-            refracao_olho_esquerdo_eixo,
-            refracao_olho_direito_adicao,
-            refracao_olho_esquerdo_adicao,
-            dp,
+            longe_esferico_od,
+            longe_esferico_oe,
+            longe_cilindro_od,
+            longe_cilindro_oe,
+            longe_eixo_od,
+            longe_eixo_oe,
+            perto_esferico_od,
+            perto_esferico_oe,
+            perto_cilindro_od,
+            perto_cilindro_oe,
+            perto_eixo_od,
+            perto_eixo_oe,
+            avl_od,
+            avl_oe,
+            tonometria_od,
+            tonometria_oe,
             biomicroscopia,
-            fungoscopia,
+            fundoscopia,
+            outros,
             'consulta_id': id
         };
 
         try {
-            await api.post('/avaliacao', data, {
+            await api.post('/evaluations', data, {
                 headers: {
                     'Authorization': token
                 }
             });
             history.push(`/review/${consulta.id}`);
         } catch (err) {
-            alert('Erro ao confirmar avaliação');
+            alert('Erro ao continuar avaliação');
         }
     }
 
@@ -146,94 +147,112 @@ export default function Evaluation() {
                     <p>{patient.antecedentes_pessoais}</p>
                 </section>
                 <form onSubmit={handleNewEvaluation}>
-                    <strong>HDA:</strong>
+                    <strong>OP/HDA:</strong>
                     <input
-                        placeholder="HDA"
+                        placeholder="OP/HDA"
                         value={hda}
                         onChange={e => setHda(e.target.value)}
                     />
+                    <strong>Refração:</strong>
+                    <div>
+                        <p id="od">OD</p>
+                        <input
+                            placeholder="Esférico"
+                            value={longe_esferico_od}
+                            onChange={e => setLonge_esferico_od(e.target.value)}
+                        />
+                        <input
+                            placeholder="Cilindro"
+                            value={longe_cilindro_od}
+                            onChange={e => setLonge_cilindro_od(e.target.value)}
+                        />
+                        <input
+                            placeholder="Eixo"
+                            value={longe_eixo_od}
+                            onChange={e => setLonge_eixo_od(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <p id="oe">OE</p>
+                        <input
+                            placeholder="Esférico"
+                            value={longe_esferico_oe}
+                            onChange={e => setLonge_esferico_oe(e.target.value)}
+                        />
+                        <input
+                            placeholder="Cilindro"
+                            value={longe_cilindro_oe}
+                            onChange={e => setLonge_cilindro_oe(e.target.value)}
+                        />
+                        <input
+                            placeholder="Eixo"
+                            value={longe_eixo_oe}
+                            onChange={e => setLonge_eixo_oe(e.target.value)}
+                        />
+                    </div>
+                    <strong>Adição:</strong>
+                    <div>
+                        <p id="od">OD</p>
+                        <input
+                            placeholder="Esférico"
+                            value={perto_esferico_od}
+                            onChange={e => setPerto_esferico_od(e.target.value)}
+                        />
+                        <input
+                            placeholder="Cilindro"
+                            value={perto_cilindro_od}
+                            onChange={e => setPerto_cilindro_od(e.target.value)}
+                        />
+                        <input
+                            placeholder="Eixo"
+                            value={perto_eixo_od}
+                            onChange={e => setPerto_eixo_od(e.target.value)}
+                        />
+                    </div>
+                    <div>
+                        <p id="oe">OE</p>
+                        <input
+                            placeholder="Esférico"
+                            value={perto_esferico_oe}
+                            onChange={e => setPerto_esferico_oe(e.target.value)}
+                        />
+                        <input
+                            placeholder="Cilindro"
+                            value={perto_cilindro_oe}
+                            onChange={e => setPerto_cilindro_oe(e.target.value)}
+                        />
+                        <input
+                            placeholder="Eixo"
+                            value={perto_eixo_oe}
+                            onChange={e => setPerto_eixo_oe(e.target.value)}
+                        />
+                    </div>
+                    <strong>AVL:</strong>
+                    <div>
+                        <input
+                            placeholder="OD"
+                            value={avl_od}
+                            onChange={e => setAvl_od(e.target.value)}
+                        />
+                        <input
+                            placeholder="OE"
+                            value={avl_oe}
+                            onChange={e => setAvl_oe(e.target.value)}
+                        />
+                    </div>
                     <strong>Tonometria:</strong>
                     <div>
                         <input
-                            placeholder="OE"
-                            value={tonometria_olho_esquerdo}
-                            onChange={e => setTonometria_olho_esquerdo(e.target.value)}
-                        />
-                        <input
                             placeholder="OD"
-                            value={tonometria_olho_direito}
-                            onChange={e => setTonometria_olho_direito(e.target.value)}
+                            value={tonometria_od}
+                            onChange={e => setTonometria_od(e.target.value)}
                         />
-                    </div>
-                    <strong>Inspeção:</strong>
-                    <input
-                        placeholder="Inspeção"
-                        value={inspecao}
-                        onChange={e => setInspecao(e.target.value)}
-                    />
-                    <input
-                        placeholder="PPC"
-                        value={inspecao_ppc}
-                        onChange={e => setInspecao_ppc(e.target.value)}
-                    />
-                    <strong>Refração:</strong>
-                    <p>Esférico</p>
-                    <div>
                         <input
                             placeholder="OE"
-                            value={refracao_olho_esquerdo_esferico}
-                            onChange={e => setRefracao_olho_esquerdo_esferico(e.target.value)}
-                        />
-                        <input
-                            placeholder="OD"
-                            value={refracao_olho_direito_esferico}
-                            onChange={e => setRefracao_olho_direito_esferico(e.target.value)}
+                            value={tonometria_oe}
+                            onChange={e => setTonometria_oe(e.target.value)}
                         />
                     </div>
-                    <p>Cilindro</p>
-                    <div>
-                        <input
-                            placeholder="OE"
-                            value={refracao_olho_esquerdo_cilindro}
-                            onChange={e => setRefracao_olho_esquerdo_cilindro(e.target.value)}
-                        />
-                        <input
-                            placeholder="OD"
-                            value={refracao_olho_direito_cilindro}
-                            onChange={e => setRefracao_olho_direito_cilindro(e.target.value)}
-                        />
-                    </div>
-                    <p>Eixo</p>
-                    <div>
-                        <input
-                            placeholder="OE"
-                            value={refracao_olho_esquerdo_eixo}
-                            onChange={e => setRefracao_olho_esquerdo_eixo(e.target.value)}
-                        />
-                        <input
-                            placeholder="OD"
-                            value={refracao_olho_direito_eixo}
-                            onChange={e => setRefracao_olho_direito_eixo(e.target.value)}
-                        />
-                    </div>
-                    <p>Adição</p>
-                    <div>
-                        <input
-                            placeholder="OE"
-                            value={refracao_olho_esquerdo_adicao}
-                            onChange={e => setRefracao_olho_esquerdo_adicao(e.target.value)}
-                        />
-                        <input
-                            placeholder="OD"
-                            value={refracao_olho_direito_adicao}
-                            onChange={e => setRefracao_olho_direito_adicao(e.target.value)}
-                        />
-                    </div>
-                    <input
-                        placeholder="DP"
-                        value={dp}
-                        onChange={e => setDp(e.target.value)}
-                    />
                     <strong>Biomicroscopia:</strong>
                     <input
                         placeholder="Biomicroscopia"
@@ -243,22 +262,9 @@ export default function Evaluation() {
                     <strong>Fundoscopia:</strong>
                     <input
                         placeholder="Fundoscopia"
-                        value={fungoscopia}
-                        onChange={e => setFungoscopia(e.target.value)}
+                        value={fundoscopia}
+                        onChange={e => setFundoscopia(e.target.value)}
                     />
-                    <strong>AVL:</strong>
-                    <div>
-                        <input
-                            placeholder="OE"
-                            value={avl_olho_esquerdo}
-                            onChange={e => setAvl_olho_esquerdo(e.target.value)}
-                        />
-                        <input
-                            placeholder="OD"
-                            value={avl_olho_direito}
-                            onChange={e => setAvl_olho_direito(e.target.value)}
-                        />
-                    </div>
                     <button className="button" type="submit">Continuar</button>
                 </form>
             </div>

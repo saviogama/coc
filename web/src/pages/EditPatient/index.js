@@ -6,8 +6,8 @@ import { FiArrowLeft } from 'react-icons/fi';
 import './styles.css';
 
 export default function EditPatient() {
-    const [patient, setPatient] = useState({});
     const [nome, setNome] = useState('');
+    const [cpf, setCpf] = useState('');
     const [rg, setRg] = useState('');
     const [data_nascimento, setData_nascimento] = useState('');
     const [idade, setIdade] = useState('');
@@ -24,8 +24,8 @@ export default function EditPatient() {
     const [antecedentes_pessoais, setAntecedentes_pessoais] = useState('');
 
     const { token } = useContext(StoreContext);
-    const { cpf } = useParams();
     const history = useHistory();
+    const { patient } = useParams();
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -33,40 +33,37 @@ export default function EditPatient() {
 
     useEffect(() => {
         (async () => {
-            await api.get('patients', {
-                params: {
-                    'cpf': cpf
-                },
+            await api.get(`patients/${patient}`, {
                 headers: {
                     Authorization: token,
                 }
             }).then(response => {
-                setPatient(response.data[0]);
-                setNome(response.data[0].nome);
-                setRg(response.data[0].rg);
-                setData_nascimento(response.data[0].data_nascimento);
-                setIdade(response.data[0].idade);
-                setReg(response.data[0].reg);
-                setRua(response.data[0].rua);
-                setNumero(response.data[0].numero);
-                setBairro(response.data[0].bairro);
-                setNome_pai(response.data[0].nome_pai);
-                setNome_mae(response.data[0].nome_mae);
-                setTelefone(response.data[0].telefone);
-                setEmail(response.data[0].email);
-                setProfissao(response.data[0].profissao);
-                setConvenio(response.data[0].convenio);
-                setAntecedentes_pessoais(response.data[0].antecedentes_pessoais);
+                setNome(response.data.nome);
+                setCpf(response.data.cpf);
+                setRg(response.data.rg);
+                setData_nascimento(response.data.data_nascimento);
+                setIdade(response.data.idade);
+                setReg(response.data.reg);
+                setRua(response.data.rua);
+                setNumero(response.data.numero);
+                setBairro(response.data.bairro);
+                setNome_pai(response.data.nome_pai);
+                setNome_mae(response.data.nome_mae);
+                setTelefone(response.data.telefone);
+                setEmail(response.data.email);
+                setProfissao(response.data.profissao);
+                setConvenio(response.data.convenio);
+                setAntecedentes_pessoais(response.data.antecedentes_pessoais);
             })
         })();
-    }, [setPatient]);
+    }, []);
 
     async function handleEditPatient(e) {
         e.preventDefault();
 
         const data = {
-            cpf,
             nome,
+            cpf,
             rg,
             data_nascimento,
             idade,
@@ -112,6 +109,11 @@ export default function EditPatient() {
                         value={nome}
                         onChange={e => setNome(e.target.value)}
                         required
+                    />
+                    <input
+                        placeholder="CPF"
+                        value={cpf}
+                        onChange={e => setCpf(e.target.value)}
                     />
                     <input
                         placeholder="RG"

@@ -3,12 +3,11 @@ import { Link, useHistory } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
 import { FiLogOut, FiTrash2, FiEdit3 } from 'react-icons/fi';
-import { formatter } from '../../components/Formatter';
 import './styles.css';
 import logoImg from '../../assets/olho_log.svg';
 
 export default function UserHome() {
-    const [cpf, setCpf] = useState('');
+    const [nome, setNome] = useState('');
     const [patients, setPatients] = useState([]);
     const { token, signOut } = useContext(StoreContext);
 
@@ -34,9 +33,9 @@ export default function UserHome() {
         e.preventDefault();
 
         try {
-            await api.get('patients', {
+            await api.get('patients-name', {
                 params: {
-                    cpf
+                    nome
                 },
                 headers: {
                     Authorization: token,
@@ -45,7 +44,7 @@ export default function UserHome() {
                 setPatients(response.data);
             })
         } catch (error) {
-            alert('O CPF informado não está cadastrado.');
+            alert('Paciente não encontrado.');
         }
     }
 
@@ -74,7 +73,7 @@ export default function UserHome() {
                     Authorization: token,
                 }
             }).then(response => {
-                alert('Cadastro deletado com sucesso');
+                alert('Paciente deletado com sucesso');
                 window.location.reload(false);
             });
         } catch (error) {
@@ -100,12 +99,12 @@ export default function UserHome() {
                 </button>
             </header>
             <form onSubmit={searchPatient}>
-                <h3>Pesquisar por CPF:</h3>
+                <h3>Pesquisar por nome:</h3>
                 <input
                     className="searchform"
-                    placeholder="Digite o CPF desejado"
-                    value={cpf}
-                    onChange={e => setCpf(formatter(e.target.value))}
+                    placeholder="Informe o nome desejado"
+                    value={nome}
+                    onChange={e => setNome(e.target.value)}
                     required
                 />
                 <button className="smallbutton" type="submit">Buscar</button>
@@ -115,6 +114,8 @@ export default function UserHome() {
             <ul>
                 {patients.map(patient => (
                     <li key={patient.id}>
+                        <strong>ID:</strong>
+                        <p>{patient.id}</p>
                         <strong>Nome:</strong>
                         <p>{patient.nome}</p>
                         <strong>Nome da mãe:</strong>

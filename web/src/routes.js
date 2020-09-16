@@ -18,7 +18,7 @@ export default function Routes() {
             <Route exact path="/" component={Logon} />
             <UserRoute path="/user" component={UserHome} />
             <UserRoute path="/register" component={NewPatient} />
-            <UserRoute path="/edit/:cpf" component={EditPatient} />
+            <UserRoute path="/edit/:patient" component={EditPatient} />
             <UserRoute path="/appointments" component={UserAppointments} />
             <UserRoute path="/appointments-new" component={NewAppointment} />
             <MedRoute path="/home" component={DocAppointments} />
