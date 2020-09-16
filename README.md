@@ -10,11 +10,11 @@ _**POST** - Cadastro de usuários:_
 
 Recurso: `/privileges`
 
-Headers: `{"Authorization": "privileges"}`
+Headers: `Authorization": privileges`
 
 ```
 {
-  "id": "123321456899",
+  "id": "admin",
   "password": "secret",
   "type": 1
 }
@@ -26,7 +26,7 @@ Recurso: `/login`
 
 ```
 {
-  "id": "123321456899",
+  "id": "admin",
   "password": "secret"
 }
 ```
@@ -37,14 +37,14 @@ _**POST** - Cadastro de pacientes:_
 
 Recurso: `/patients`
 
-Headers: `{"Authorization": 123321456899}`
+Headers: `Authorization": admin`
 
 ```
 {
-  "cpf": 32132132119,
-  "nome": "Joaozin",
+  "nome": "Jose",
+  "cpf": "111.111.222-98",
   "rg": "9222545",
-  "data_nascimento": "09-01-1996",
+  "data_nascimento": "09/01/1996",
   "idade": 30,
   "reg": "Nao sei",
   "rua": "Rua dos beco",
@@ -60,14 +60,38 @@ Headers: `{"Authorization": 123321456899}`
 }
 ```
 
-_**GET** - Procura de pacientes:_
+_**GET** - Busca de todos os pacientes:_
 
-**É necessário informar sempre o CPF do usuário a ser pesquisado na query, assim como o id do usuário logado, nesse caso no headers.**
+Recurso: `/patients-all`
 
-Recurso: `/patients`
+Headers: `Authorization: admin`
 
-Query: `{"cpf": 32132132119}`
-Headers: `{"Authorization": 123321456899}`
+```
+{
+  No body
+}
+```
+
+_**GET** - Busca de paciente por nome:_
+
+**É necessário informar sempre o nome do usuário a ser pesquisado na query, assim como o id do usuário logado, nesse caso no headers.**
+
+Recurso: `/patients-name`
+
+Query: `nome: Jose`
+Headers: `Authorization: admin`
+
+```
+{
+  No body
+}
+```
+
+_**GET** - Busca de paciente por id:_
+
+Recurso: `/patients/:patient`
+
+Headers: `Authorization: admin`
 
 ```
 {
@@ -77,14 +101,14 @@ Headers: `{"Authorization": 123321456899}`
 
 _**PUT** - Atualização de pacientes:_
 
-Recurso: `/patients`
+Recurso: `/patients/:patient`
 
-Headers: `{"Authorization": 123321456899}`
+Headers: `Authorization: admin`
 
 ```
 {
-  "cpf": 32132132119,
-  "nome": "Joaozin",
+  "nome": "Jose",
+  "cpf": "222.333.454-96",
   "rg": "9222545",
   "data_nascimento": "09-01-1996",
   "idade": 30,
@@ -104,65 +128,38 @@ Headers: `{"Authorization": 123321456899}`
 
 _**DELETE** - Exclusão de pacientes:_
 
-**É necessário enviar no headers da aplicação, o id do usuário logado como forma de segurança, assim como o cpf do usuário a ser excluido.**
+Recurso: `/patients/:patient`
 
-Recurso: `/patients`
-
-Headers: `{"Authorization": 123321456899}`
+Headers: `Authorization: admin`
 
 ```
 {
-  "cpf": 32132132119
+  No body
 }
 ```
 
 _**POST** - Nova consulta:_
 
-Recurso: `/consulta`
+Recurso: `/appointments`
 
-Headers: `{"Authorization": 123321456899}`
+Headers: `Authorization: admin`
 
 ```
 {
   "tipo": "teste_de_olhinho",
-  "patient_id": 32132132119
+  "patient_id": 1
 }
 ```
 
 _**GET** - Procura de consulta:_
 
-Recurso: `/consulta`
+Recurso: `/appointments/:appointment`
 
-Headers: `{"Authorization": 123321456899}`
-
-```
-{
-  "id": 32132132119
-}
-```
-
-_**PUT** - Atualização de consulta:_
-
-Recurso: `/consulta`
-
-Headers: `{"Authorization": 123321456899}`
+Headers: `Authorization: admin`
 
 ```
 {
-  "consulta_id": 1,
-  "tipo": "teste_de_olhinho"
-}
-```
-
-_**DELETE** - Exclusão de consulta:_
-
-Recurso: `/consulta`
-
-Headers: `{"Authorization": 123321456899}`
-
-```
-{
-  "consulta_id": 1
+  No body
 }
 ```
 
@@ -178,11 +175,22 @@ Headers: `{"Authorization": 123321456899}`
 }
 ```
 
-_**GET** - Lista de today:_
+_**GET** - Lista de todas consultas do dia:_
 
 Recurso: `/today`
 
-Headers: `{"Authorization": 123321456899}`
+Headers: `Authorization: admin`
+
+```
+{
+  No body
+}
+```
+_**GET** - Lista de detalhes de uma consulta do dia:_
+
+Recurso: `/today/:appointment`
+
+Headers: `Authorization: admin`
 
 ```
 {
@@ -192,88 +200,58 @@ Headers: `{"Authorization": 123321456899}`
 
 _**DELETE** - Exclusão de today:_
 
-Recurso: `/today`
+Recurso: `/today/:today`
 
-Headers: `{"Authorization": 123321456899}`
+Headers: `Authorization: admin`
 
 ```
 {
-  "today": 1
+  No body
 }
 ```
 
-_**POST** - Nova avaliacao:_
+_**POST** - Nova avaliação a partir de uma consulta selecionada:_
 
-Recurso: `/avaliacao`
+**Cada consulta só possui uma única avaliação, porém cada paciente pode ter várias consultas registradas em seu histórico.**
 
-Headers: `{"Authorization": 123321456899}`
+Recurso: `/evaluations`
+
+Headers: `Authorization: admin`
 
 ```
 {
-  "avl_olho_direito": "teste",
-  "avl_olho_esquerdo": "teste",
   "hda": "teste",
-  "tonometria_olho_direito": "teste",
-  "tonometria_olho_esquerdo": "teste",
-  "inspecao": "teste",
-  "inspecao_ppc": "teste",
-  "refracao_olho_direito": "teste",
-  "refracao_olho_esquerdo": "teste",
-  "refracao_olho_direito_esferico": "teste",
-  "refracao_olho_esquerdo_esferico": "teste",
-  "refracao_olho_direito_cilindro": "teste",
-  "refracao_olho_esquerdo_cilindro": "teste",
-  "refracao_olho_direito_eixo": "teste",
-  "refracao_olho_esquerdo_eixo": "teste",
-  "refracao_olho_direito_adicao": "teste",
-  "refracao_olho_esquerdo_adicao": "teste",
-  "dp": "teste",
+  "longe_esferico_od": "teste",
+  "longe_esferico_oe": "teste",
+  "longe_cilindro_od": "teste",
+  "longe_cilindro_oe": "teste",
+  "longe_eixo_od": "teste",
+  "longe_eixo_oe": "teste",
+  "perto_esferico_od": "teste",
+  "perto_esferico_oe": "teste",
+  "perto_cilindro_od": "teste",
+  "perto_cilindro_oe": "teste",
+  "perto_eixo_od": "teste",
+  "perto_eixo_oe": "teste",
+  "avl_od": "teste",
+  "avl_oe": "teste",
+  "tonometria_od": "teste",
+  "tonometria_oe": "teste",
   "biomicroscopia": "teste",
-  "fungoscopia": "teste",
+  "fundoscopia": "teste",
+  "outros": "teste",
   "consulta_id": 1
 }
 ```
 
-_**GET** - Procura de avaliacao:_
+_**GET** - Busca de avaliação:_
 
-Recurso: `/avaliacao`
+Recurso: `/evaluations/:evaluation`
 
-Headers: `{"Authorization": 123321456899}`
-
-```
-{
-  "id": 1
-}
-```
-
-_**PUT** - Atualização de avaliacao:_
-
-Recurso: `/avaliacao`
-
-Headers: `{"Authorization": 123321456899}`
+Headers: `Authorization: admin`
 
 ```
 {
-  "avaliacao_id": 1,
-  "avl_olho_direito": "teste",
-  "avl_olho_esquerdo": "teste",
-  "hda": "teste",
-  "tonometria_olho_direito": "teste",
-  "tonometria_olho_esquerdo": "teste",
-  "inspecao": "teste",
-  "inspecao_ppc": "teste",
-  "refracao_olho_direito": "teste",
-  "refracao_olho_esquerdo": "teste",
-  "refracao_olho_direito_esferico": "teste",
-  "refracao_olho_esquerdo_esferico": "teste",
-  "refracao_olho_direito_cilindro": "teste",
-  "refracao_olho_esquerdo_cilindro": "teste",
-  "refracao_olho_direito_eixo": "teste",
-  "refracao_olho_esquerdo_eixo": "teste",
-  "refracao_olho_direito_adicao": "teste",
-  "refracao_olho_esquerdo_adicao": "teste",
-  "dp": "teste",
-  "biomicroscopia": "teste",
-  "fungoscopia": "teste1"
+  No body
 }
 ```
