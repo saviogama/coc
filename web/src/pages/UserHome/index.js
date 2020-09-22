@@ -81,9 +81,14 @@ export default function UserHome() {
         }
     }
 
-    async function editPatient(e, patient) {
+    function editPatient(e, patient) {
         e.preventDefault();
         history.push(`/edit/${patient}`);
+    }
+
+    function patientHistory(e, patient) {
+        e.preventDefault();
+        history.push(`/history/${patient}`);
     }
 
     return (
@@ -120,6 +125,7 @@ export default function UserHome() {
                         <p>{patient.nome}</p>
                         <strong>Nome da mãe:</strong>
                         <p>{patient.nome_mae}</p>
+                        <button className="historico" onClick={(e) => { patientHistory(e, patient.id) }}>Ver histórico</button>
                         <button className="bt" type="button">
                             <FiTrash2 size={20} color="#a8a8b3" onClick={(e) => { deletePatient(e, patient.id) }} />
                         </button>

@@ -27,7 +27,7 @@ export async function up(knex: Knex) {
         table.integer('consulta_id')
             .notNullable()
             .references('id')
-            .inTable('consulta')
+            .inTable('appointments')
             .onUpdate('CASCADE')
             .onDelete('CASCADE');
     });

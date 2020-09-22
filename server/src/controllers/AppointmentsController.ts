@@ -30,6 +30,33 @@ export default class AppointmentsController {
         return response.json(consulta);
     }
 
+    async patient(request: Request, response: Response) {
+        const { appointment } = request.params;
+        const id = request.headers.authorization;
+
+        const user = await db('users')
+            .where('id', id)
+            .select('id')
+            .first();
+
+        if (!user) {
+            return response.status(401).json({
+                error: 'Token inválido'
+            })
+        }
+
+        const consulta = await db('appointments')
+            .where('patient_id', appointment);
+
+        if (!consulta) {
+            return response.status(401).json({
+                error: 'Não existe uma consulta com esse paciente'
+            })
+        }
+
+        return response.json(consulta);
+    }
+
     async create(request: Request, response: Response) {
         const {
             tipo,
