@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
 import { PDFDownloadLink, Page, Text, View, Image, Document, StyleSheet } from '@react-pdf/renderer';
+import { toNumber } from '../../components/Formatter';
 import logo from '../../assets/logococ.png';
 import footer from '../../assets/footer.png';
 import footerTable from '../../assets/footerTable.png';
@@ -225,16 +226,19 @@ export default function RenderPrescricao() {
                             placeholder="Dia"
                             value={dia}
                             onChange={e => setDia(e.target.value)}
+                            required
                         />
                         <input
                             placeholder="Mês"
                             value={mes}
-                            onChange={e => setMes(e.target.value)}
+                            onChange={e => setMes(toNumber(e.target.value))}
+                            required
                         />
                         <input
                             placeholder="Ano"
                             value={ano}
                             onChange={e => setAno(e.target.value)}
+                            required
                         />
                     </div>
                     <button className="button" type="button" onClick={hide}>Gerar prescrição</button>

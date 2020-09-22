@@ -35,7 +35,7 @@ export default function UserAppointments() {
                     setConsultas(response.data);
                 });
             })();
-        }, 30000);
+        }, 10000);
         return () => clearInterval(interval);
     }, []);
 
