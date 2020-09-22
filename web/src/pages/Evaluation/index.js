@@ -265,6 +265,11 @@ export default function Evaluation() {
                         value={fundoscopia}
                         onChange={e => setFundoscopia(e.target.value)}
                     />
+                    <textarea
+                        placeholder="Outro"
+                        value={outros}
+                        onChange={e => setOutros(e.target.value)}
+                    />
                     <button className="button" type="submit">Continuar</button>
                 </form>
             </div>

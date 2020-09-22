@@ -23,6 +23,7 @@ routes.post('/patients', patientsController.create); //ok
 routes.put('/patients/:patient', patientsController.update); //ok
 routes.delete('/patients/:patient', patientsController.delete); //ok
 
+routes.get('/appointments-patient/:appointment', appointmentsController.patient); //ok
 routes.get('/appointments/:appointment', appointmentsController.index); //ok
 routes.post('/appointments', appointmentsController.create); //ok
 //routes.put('/appointments', appointmentsController.update);
