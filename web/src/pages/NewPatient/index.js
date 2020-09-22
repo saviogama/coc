@@ -74,7 +74,7 @@ export default function NewPatient() {
                 </section>
                 <form onSubmit={handleNewPacient}>
                     <input
-                        placeholder="Nome"
+                        placeholder="Nome completo"
                         value={nome}
                         onChange={e => setNome(e.target.value)}
                         required

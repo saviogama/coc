@@ -12,3 +12,8 @@ export const stringfy = value => {
         .replace(/_/g, ' ')
         .toUpperCase()
 }
+
+export const toNumber = value => {
+    return value
+        .replace(/\D/g, '')
+}

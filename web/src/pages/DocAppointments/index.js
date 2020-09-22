@@ -36,7 +36,7 @@ export default function DocAppointments() {
                     setConsultas(response.data);
                 });
             })();
-        }, 30000);
+        }, 10000);
         return () => clearInterval(interval);
     }, []);
 
