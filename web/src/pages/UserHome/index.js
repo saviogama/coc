@@ -133,7 +133,7 @@ export default function UserHome() {
                             <FiEdit3 size={20} color="#a8a8b3" onClick={(e) => { editPatient(e, patient.id) }} />
                         </button>
                     </li>
-                ))}
+                )).reverse()}
             </ul>
         </div>
     );

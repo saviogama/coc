@@ -10,6 +10,7 @@ export async function up(knex: Knex) {
         table.string('longe_cilindro_oe');
         table.string('longe_eixo_od');
         table.string('longe_eixo_oe');
+        table.string('adicao');
         table.string('perto_esferico_od');
         table.string('perto_esferico_oe');
         table.string('perto_cilindro_od');

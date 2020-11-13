@@ -1,7 +1,7 @@
 import Knex from 'knex';
 
 export async function up(knex: Knex) {
-    return knex.schema.createTable('today', table => {
+    return knex.schema.createTable('history', table => {
         table.string('id').primary();
         table.string('patient_id').notNullable();
         table.string('nome').notNullable();
@@ -21,5 +21,5 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-    return knex.schema.dropTable('today');
+    return knex.schema.dropTable('history');
 }

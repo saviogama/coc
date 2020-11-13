@@ -8,6 +8,7 @@ import './styles.css';
 
 export default function NewAppointment() {
     const [id, setId] = useState('');
+    const [forma, setForma] = useState('');
     const [tipo, setTipo] = useState('');
 
     const { token } = useContext(StoreContext);
@@ -17,6 +18,7 @@ export default function NewAppointment() {
         e.preventDefault();
 
         const data = {
+            forma,
             tipo,
             'patient_id': id
         };
@@ -51,6 +53,11 @@ export default function NewAppointment() {
                         onChange={e => setId(e.target.value)}
                         required
                     />
+                    <select value={forma} onChange={e => setForma(e.target.value)}>
+                        <option value='' disabled>Selecione o tipo</option>
+                        <option value="consulta">Consulta</option>
+                        <option value="volta">Volta</option>
+                    </select>
                     <select value={tipo} onChange={e => setTipo(e.target.value)}>
                         <option value='' disabled>Selecione o tipo da consulta</option>
                         <option value="curva_tensional">Curva Tensional</option>

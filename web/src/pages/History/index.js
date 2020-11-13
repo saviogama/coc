@@ -57,6 +57,8 @@ export default function History() {
             <ul>
                 {consultas.map(consulta => (
                     <li key={consulta.id}>
+                        <strong>Tipo:</strong>
+                        <p>{stringfy(consulta.forma)}</p>
                         <strong>Tipo da consulta:</strong>
                         <p>{stringfy(consulta.tipo)}</p>
                         <strong>Data:</strong>

@@ -58,21 +58,35 @@ export default class ConsultaController {
             .select('id')
             .first();
 
+        const complete = await db('today')
+            .where('id', today)
+            .first()
+
         if (!user) {
             return response.status(401).json({
                 error: 'Token inválido'
             })
-        } else {
-            try {
-                await db('today')
-                    .where('id', today)
-                    .delete();
-            } catch (error) {
-                return response.status(400).json({
-                    error: 'Não existe nenhuma consulta com esse id'
-                });
-            }
         }
+
+        if (!complete) {
+            return response.status(400).json({
+                error: 'Não existe nenhuma consulta com esse id'
+            });
+        }
+
+        await db('today')
+            .where('id', today)
+            .delete();
+
+        await db('history').insert({
+            id: complete.id,
+            patient_id: complete.patient_id,
+            nome: complete.nome,
+            nome_mae: complete.nome_mae,
+            forma: complete.forma,
+            tipo: complete.tipo
+        });
+
         return response.status(204).send();
     }
 }
