@@ -266,7 +266,7 @@ export default function Evaluation() {
                         onChange={e => setFundoscopia(e.target.value)}
                     />
                     <textarea
-                        placeholder="Outro"
+                        placeholder="Outros"
                         value={outros}
                         onChange={e => setOutros(e.target.value)}
                     />

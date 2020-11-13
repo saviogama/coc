@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import StoreContext from '../../contexts/context';
 import api from '../../services/api';
+import { formatter } from '../../components/Formatter';
 import { FiArrowLeft } from 'react-icons/fi';
 import './styles.css';
 
@@ -81,7 +82,7 @@ export default function EditPatient() {
         };
 
         try {
-            await api.put('/patients', data, {
+            await api.put(`/patients/${patient}`, data, {
                 headers: {
                     'Authorization': token
                 }
@@ -113,7 +114,7 @@ export default function EditPatient() {
                     <input
                         placeholder="CPF"
                         value={cpf}
-                        onChange={e => setCpf(e.target.value)}
+                        onChange={e => setCpf(formatter(e.target.value))}
                     />
                     <input
                         placeholder="RG"
