@@ -59,6 +59,7 @@ export default class AppointmentsController {
 
     async create(request: Request, response: Response) {
         const {
+            forma,
             tipo,
             patient_id
         } = request.body;
@@ -88,9 +89,10 @@ export default class AppointmentsController {
 
         try {
             const today = await db('appointments').insert({
+                forma,
                 tipo,
                 patient_id
-            }).returning('id');
+            });
 
             const today_id = today[0];
 
@@ -99,6 +101,7 @@ export default class AppointmentsController {
                 patient_id: patient.id,
                 nome: patient.nome,
                 nome_mae: patient.nome_mae,
+                forma,
                 tipo
             });
 

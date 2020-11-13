@@ -71,17 +71,21 @@ export default function Review() {
                     <p>{patient.nome}</p>
                     <strong>OP/HDA:</strong>
                     <p>{avaliacao.hda}</p>
-                    <strong>Refração (esférico):</strong>
+                    <strong>Refração:</strong>
+                    <p/>
+                    <strong>Longe(esférico):</strong>
                     <p>OD: {avaliacao.longe_esferico_od} / OE: {avaliacao.longe_esferico_oe}</p>
-                    <strong>Refração (cilindro):</strong>
+                    <strong>Longe(cilindro):</strong>
                     <p>OD: {avaliacao.longe_cilindro_od} / OE: {avaliacao.longe_cilindro_oe}</p>
-                    <strong>Refração (eixo):</strong>
+                    <strong>Longe(eixo):</strong>
                     <p>OD: {avaliacao.longe_eixo_od} / OE: {avaliacao.longe_eixo_oe}</p>
-                    <strong>Adição (esférico):</strong>
+                    <strong>Adição:</strong>
+                    <p>{avaliacao.adicao}</p>
+                    <strong>Perto (esférico):</strong>
                     <p>OD: {avaliacao.perto_esferico_od} / OE: {avaliacao.perto_esferico_oe}</p>
-                    <strong>Adição (cilindro):</strong>
+                    <strong>Perto (cilindro):</strong>
                     <p>OD: {avaliacao.perto_cilindro_od} / OE: {avaliacao.perto_cilindro_oe}</p>
-                    <strong>Adição (eixo):</strong>
+                    <strong>Perto (eixo):</strong>
                     <p>OD: {avaliacao.perto_eixo_od} / OE: {avaliacao.perto_eixo_oe}</p>
                     <strong>AVL:</strong>
                     <p>OD: {avaliacao.avl_od} / OE: {avaliacao.avl_oe}</p>

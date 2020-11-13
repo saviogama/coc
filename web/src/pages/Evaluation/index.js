@@ -8,6 +8,7 @@ import './styles.css';
 export default function Evaluation() {
     const [consulta, setConsulta] = useState({});
     const [patient, setPatient] = useState([]);
+    const [forma, setForma] = useState('');
     const [tipo, setTipo] = useState('');
 
     const [hda, setHda] = useState('');
@@ -17,6 +18,7 @@ export default function Evaluation() {
     const [longe_cilindro_oe, setLonge_cilindro_oe] = useState('');
     const [longe_eixo_od, setLonge_eixo_od] = useState('');
     const [longe_eixo_oe, setLonge_eixo_oe] = useState('');
+    const [adicao, setAdicao] = useState('');
     const [perto_esferico_od, setPerto_esferico_od] = useState('');
     const [perto_esferico_oe, setPerto_esferico_oe] = useState('');
     const [perto_cilindro_od, setPerto_cilindro_od] = useState('');
@@ -47,6 +49,13 @@ export default function Evaluation() {
                 }
             }).then(response => {
                 setConsulta(response.data);
+
+                if (response.data.forma === 'consulta') {
+                    setForma('Consulta');
+                }
+                if (response.data.forma === 'volta') {
+                    setForma('Volta');
+                }
 
                 if (response.data.tipo === 'curva_tensional') {
                     setTipo('Curva tensional');
@@ -96,6 +105,7 @@ export default function Evaluation() {
             longe_cilindro_oe,
             longe_eixo_od,
             longe_eixo_oe,
+            adicao,
             perto_esferico_od,
             perto_esferico_oe,
             perto_cilindro_od,
@@ -141,6 +151,8 @@ export default function Evaluation() {
                     <p>{patient.profissao}</p>
                     <strong>Convênio:</strong>
                     <p>{patient.convenio}</p>
+                    <strong>Tipo:</strong>
+                    <p>{forma}</p>
                     <strong>Tipo de consulta:</strong>
                     <p>{tipo}</p>
                     <strong>Antecedentes pessoais:</strong>
@@ -154,6 +166,7 @@ export default function Evaluation() {
                         onChange={e => setHda(e.target.value)}
                     />
                     <strong>Refração:</strong>
+                    <strong>Longe:</strong>
                     <div>
                         <p id="od">OD</p>
                         <input
@@ -191,6 +204,12 @@ export default function Evaluation() {
                         />
                     </div>
                     <strong>Adição:</strong>
+                    <input
+                        placeholder="Adição"
+                        value={adicao}
+                        onChange={e => setAdicao(e.target.value)}
+                    />
+                    <strong>Perto:</strong>
                     <div>
                         <p id="od">OD</p>
                         <input

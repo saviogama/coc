@@ -61,6 +61,7 @@ export default function UserAppointments() {
             <header>
                 <img src={logoImg} alt="COC" />
                 <Link className="button" id="link1" to="/appointments-new">Nova Consulta</Link>
+                <Link className="button" id="link2" to="/appointments-end">Finalizadas</Link>
                 <Link className="back-link" id="link3" to="/user">
                     <FiArrowLeft size={16} color="#52658c" />
                     Voltar
@@ -74,6 +75,8 @@ export default function UserAppointments() {
                         <p>{consulta.nome}</p>
                         <strong>Nome da mãe:</strong>
                         <p>{consulta.nome_mae}</p>
+                        <strong>Tipo:</strong>
+                        <p>{stringfy(consulta.forma)}</p>
                         <strong>Tipo de consulta:</strong>
                         <p>{stringfy(consulta.tipo)}</p>
                         <button className="bt" type="button">
