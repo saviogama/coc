@@ -90,7 +90,7 @@ export default class AppointmentsController {
             const today = await db('appointments').insert({
                 tipo,
                 patient_id
-            });
+            }).returning('id');
 
             const today_id = today[0];
 

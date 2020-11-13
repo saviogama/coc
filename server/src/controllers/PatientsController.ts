@@ -200,6 +200,13 @@ export default class PatientsController {
                 antecedentes_pessoais
             });
 
+        await db('today')
+            .where('patient_id', patient)
+            .update({
+                nome,
+                nome_mae
+            });
+
         return response.status(204).send();
     }
 

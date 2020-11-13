@@ -263,26 +263,6 @@ export default function RenderPrescricao() {
                                     <Text style={styles.text}>Médico</Text>
                                     <Text style={styles.titleFooter}>Prescrição de lentes corretivas</Text>
                                     <View style={styles.firsttable}>
-                                        <Text style={styles.values}>Perto   </Text>
-                                        <Text style={styles.azul}>---------------------------------------------------------------------------------</Text>
-                                    </View>
-                                    <View style={styles.table}>
-                                        <Text style={styles.olhodireito}>OD</Text>
-                                        <Text style={styles.values}>{perto_esferico_od}</Text>
-                                        <Text style={styles.values}>|</Text>
-                                        <Text style={styles.values}>{perto_cilindro_od}</Text>
-                                        <Text style={styles.values}>|</Text>
-                                        <Text style={styles.values}>{perto_eixo_od}</Text>
-                                    </View>
-                                    <View style={styles.table}>
-                                        <Text style={styles.olhoesquerdo}>OE</Text>
-                                        <Text style={styles.values}>{perto_esferico_oe}</Text>
-                                        <Text style={styles.values}>|</Text>
-                                        <Text style={styles.values}>{perto_cilindro_oe}</Text>
-                                        <Text style={styles.values}>|</Text>
-                                        <Text style={styles.values}>{perto_eixo_oe}</Text>
-                                    </View>
-                                    <View style={styles.table}>
                                         <Text style={styles.values}>Longe </Text>
                                         <Text style={styles.azul}>---------------------------------------------------------------------------------</Text>
                                     </View>
@@ -301,6 +281,26 @@ export default function RenderPrescricao() {
                                         <Text style={styles.values}>{longe_cilindro_oe}</Text>
                                         <Text style={styles.values}>|</Text>
                                         <Text style={styles.values}>{longe_eixo_oe}</Text>
+                                    </View>
+                                    <View style={styles.table}>
+                                        <Text style={styles.values}>Perto   </Text>
+                                        <Text style={styles.azul}>---------------------------------------------------------------------------------</Text>
+                                    </View>
+                                    <View style={styles.table}>
+                                        <Text style={styles.olhodireito}>OD</Text>
+                                        <Text style={styles.values}>{perto_esferico_od}</Text>
+                                        <Text style={styles.values}>|</Text>
+                                        <Text style={styles.values}>{perto_cilindro_od}</Text>
+                                        <Text style={styles.values}>|</Text>
+                                        <Text style={styles.values}>{perto_eixo_od}</Text>
+                                    </View>
+                                    <View style={styles.table}>
+                                        <Text style={styles.olhoesquerdo}>OE</Text>
+                                        <Text style={styles.values}>{perto_esferico_oe}</Text>
+                                        <Text style={styles.values}>|</Text>
+                                        <Text style={styles.values}>{perto_cilindro_oe}</Text>
+                                        <Text style={styles.values}>|</Text>
+                                        <Text style={styles.values}>{perto_eixo_oe}</Text>
                                     </View>
                                     <Image
                                         style={styles.footerTable}
